@@ -1,0 +1,29 @@
+# Godot
+.godot/
+*.import
+*.translation
+export/
+export_presets.cfg
+
+# Godot 4.x mono
+.mono/
+data_*/
+
+# Build artifacts
+*.tmp
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+*.swp
+*.swo
+~$*
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# gstack (user-local, not project)
+.gstack/
