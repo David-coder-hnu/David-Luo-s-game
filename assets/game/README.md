@@ -1,10 +1,20 @@
 # 垂直切片图像资产包
 
-状态：**V2 运行时视觉资产已生产并通过静态检查，等待 Godot 实机视觉验收**<br>
+状态：**生成式 V3 正在替换 V2；V2 仅作碰撞、定位与开发回退**<br>
 适用版本：Vertical Slice 0.1<br>
 最后更新：2026-07-13
 
 本目录包含当前双轮垂直切片所需的全部图像美术资产。音频、Godot shader 代码和场景动画不属于本目录。
+
+## V3 生成式美术
+
+V3 以完整房间背景、独立角色和关键状态覆盖层替代毛坯感明显的 V2 图集组合。五房间第一轮母版已经生成，秦峥四方向四步态已完成透明化、切格并接入 Godot。生成记录与哈希见 [`generated_v3/GENERATION_RECORD.md`](generated_v3/GENERATION_RECORD.md)。
+
+| 客厅风格母版 | 卧室母版 |
+|---|---|
+| ![V3 客厅风格母版](generated_v3/rooms/living_room_master.png) | ![V3 卧室母版](generated_v3/rooms/bedroom_master.png) |
+
+V3 原图不是实机截图；完成裁切、碰撞映射和 Godot 运行评审前不得标为 `APPROVED`。
 
 静态检查只证明文件、图集与色板契约有效，不代表美术已获批准。所有运行时资产当前为 `REVIEW`；只有第一轮、第二轮和惩罚三组 Godot 截图及动画检查完成后才能进入 `APPROVED`。
 

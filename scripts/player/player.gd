@@ -4,7 +4,7 @@ signal interaction_changed(prompt_key: StringName)
 
 const SPEED := 96.0
 const INTERACTION_DISTANCE := 48.0
-const SPRITESHEET := preload("res://assets/game/characters/qin_zheng_spritesheet.png")
+const SPRITESHEET := preload("res://assets/game/generated_v3/characters/qin_zheng_spritesheet.png")
 const DIRECTION_ROWS := {
 	"down": 0,
 	"up": 1,

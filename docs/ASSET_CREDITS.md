@@ -18,6 +18,7 @@
 | `assets/game/ui/title_background.png` | 游戏标题背景 | 由项目主视觉受控裁切 | 同主视觉 | 640×360；概念视觉用于标题，不宣称实机场景 | 2026-07-13 |
 | `assets/game/source/generated/*_source.png` | 叙事特写高分辨率母版 | David Luo 项目指导；OpenAI 内置图像生成工具生成 | 由项目所有者按 MIT 分发；同时受生成服务适用条款约束 | 提示与 SHA-256 见同目录 `GENERATION_RECORD.md`；不得直接导入游戏 | 2026-07-13 |
 | `assets/game/closeups/*.png` | 叙事特写运行时图像 | 由上述母版经确定性处理生成 | 同母版 | 320×180、最近邻、有限色、无抖动；处理脚本可复现 | 2026-07-13 |
+| `assets/game/generated_v3/**` | V3 房间母版、纯背景与角色资产 | David Luo 项目指导；OpenAI 内置图像生成工具生成；确定性脚本处理 | 由项目所有者按 MIT 分发；同时受生成服务适用条款约束 | 提示摘要、SHA-256、去背与处理流程见 `assets/game/generated_v3/GENERATION_RECORD.md`；接入前状态为生产中 | 2026-07-13 |
 
 ## 合入规则
 
