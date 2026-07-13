@@ -14,12 +14,8 @@ var dialogue_open := false
 func _ready() -> void:
 	_apply_styles()
 	room_tag.text = TextCatalog.get_text(&"ui.phase.loop1_bedroom")
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if dialogue_open and event.is_action_pressed("interact"):
-		close_dialogue()
-		get_viewport().set_input_as_handled()
+	DialogueController.page_presented.connect(_on_page_presented)
+	DialogueController.dialogue_finished.connect(_on_dialogue_finished)
 
 
 func set_prompt(text_key: StringName) -> void:
@@ -27,14 +23,19 @@ func set_prompt(text_key: StringName) -> void:
 	prompt_panel.visible = not text_key.is_empty() and not dialogue_open
 
 
-func show_dialogue(text_key: StringName) -> void:
+func show_dialogue(dialogue_id: StringName) -> bool:
+	return DialogueController.start_dialogue(dialogue_id)
+
+
+func _on_page_presented(_dialogue_id: StringName, text_key: StringName, visible_characters: int, _complete: bool, _page_index: int, _page_count: int) -> void:
 	dialogue_text.text = TextCatalog.get_text(text_key)
+	dialogue_text.visible_characters = visible_characters
 	dialogue_panel.visible = true
 	prompt_panel.visible = false
 	dialogue_open = true
 
 
-func close_dialogue() -> void:
+func _on_dialogue_finished(_dialogue_id: StringName) -> void:
 	dialogue_panel.visible = false
 	dialogue_open = false
 	dialogue_closed.emit()

@@ -16,6 +16,8 @@ var _active_interactable: Interactable
 
 
 func _ready() -> void:
+	if GameState.snapshot_for_debug()["phase"] == &"title":
+		GameState.start_new_game()
 	_build_tile_map()
 	_build_props()
 	_build_collisions()
@@ -24,7 +26,7 @@ func _ready() -> void:
 	print("HELL_CYCLE_PLAYABLE_OK")
 	var capture_path := _capture_path_from_args()
 	if not capture_path.is_empty():
-		player.global_position = Vector2(800, 192)
+		player.global_position = Vector2(796, 184)
 		player.set_facing(Vector2.LEFT)
 		_capture_runtime.call_deferred(capture_path)
 
@@ -67,9 +69,8 @@ func _build_props() -> void:
 	_add_prop(props_front, "bedroom_lamp", Rect2(704, 128, 32, 32), Vector2(768, 148), 2)
 	_add_prop(props_front, "door_bedroom", Rect2(0, 64, 64, 64), Vector2(800, 336), 3, ENVIRONMENT_ATLAS)
 
-	_add_interaction(&"bed", Vector2(752, 176), &"bedroom.bed.inspect")
-	_add_interaction(&"bedside_table", Vector2(768, 176), &"bedroom.table.inspect")
-	_add_interaction(&"bedroom_window", Vector2(816, 144), &"bedroom.window.inspect")
+	_add_interaction(&"bed", Vector2(752, 176), &"bedroom.bed.loop1")
+	_add_interaction(&"exit_door", Vector2(800, 296), &"bedroom.door.loop1")
 
 
 func _build_collisions() -> void:
@@ -132,7 +133,10 @@ func _on_interaction_changed(prompt_key: StringName) -> void:
 func _on_interaction_activated(_dialogue_key: StringName, interactable: Interactable) -> void:
 	_active_interactable = interactable
 	player.set_control_enabled(false)
-	hud.show_dialogue(interactable.dialogue_key)
+	if not hud.show_dialogue(interactable.dialogue_key):
+		interactable.release()
+		_active_interactable = null
+		player.set_control_enabled(true)
 
 
 func _on_dialogue_closed() -> void:

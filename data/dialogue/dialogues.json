@@ -1,0 +1,48 @@
+{
+  "dialogues": {
+    "bedroom.bed.loop1": {
+      "pages": [
+        {
+          "text_key": "bedroom.bed.loop1.01",
+          "speaker": "qin_zheng",
+          "presentation": "box",
+          "min_display_ms": 250,
+          "skippable": true,
+          "cue_before": "",
+          "cue_after": ""
+        },
+        {
+          "text_key": "bedroom.bed.loop1.02",
+          "speaker": "qin_zheng",
+          "presentation": "box",
+          "min_display_ms": 250,
+          "skippable": true,
+          "cue_before": "",
+          "cue_after": ""
+        }
+      ]
+    },
+    "bedroom.door.loop1": {
+      "pages": [
+        {
+          "text_key": "bedroom.door.loop1.01",
+          "speaker": "qin_zheng",
+          "presentation": "box",
+          "min_display_ms": 250,
+          "skippable": true,
+          "cue_before": "",
+          "cue_after": ""
+        },
+        {
+          "text_key": "bedroom.door.loop1.02",
+          "speaker": "qin_zheng",
+          "presentation": "box",
+          "min_display_ms": 250,
+          "skippable": true,
+          "cue_before": "",
+          "cue_after": ""
+        }
+      ]
+    }
+  }
+}

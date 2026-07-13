@@ -25,8 +25,8 @@ func _run() -> void:
 	if player.collision_layer != 2 or player.collision_mask != 1:
 		_fail("player collision layers do not match the contract")
 		return
-	if get_nodes_in_group(&"interactable").size() != 3:
-		_fail("bedroom must expose exactly three teaching interactions")
+	if get_nodes_in_group(&"interactable").size() != 2:
+		_fail("bedroom must expose the two approved teaching interactions")
 		return
 	var text_catalog := root.get_node_or_null("TextCatalog")
 	if text_catalog == null:
@@ -35,15 +35,16 @@ func _run() -> void:
 	for key: StringName in [
 		&"ui.phase.loop1_bedroom",
 		&"ui.action.inspect",
-		&"bedroom.bed.inspect",
-		&"bedroom.table.inspect",
-		&"bedroom.window.inspect",
+		&"bedroom.bed.loop1.01",
+		&"bedroom.bed.loop1.02",
+		&"bedroom.door.loop1.01",
+		&"bedroom.door.loop1.02",
 	]:
 		if not text_catalog.call("has_key", key):
 			_fail("missing localization key: %s" % key)
 			return
 
-	player.global_position = Vector2(800, 192)
+	player.global_position = Vector2(796, 184)
 	player.call("set_facing", Vector2.LEFT)
 	await physics_frame
 	await physics_frame
@@ -57,7 +58,15 @@ func _run() -> void:
 	if not hud.get("dialogue_open") or player.get("control_enabled"):
 		_fail("interaction did not open dialogue and lock movement")
 		return
-	hud.call("close_dialogue")
+	var dialogue_controller := root.get_node("DialogueController")
+	await create_timer(0.2).timeout
+	dialogue_controller.call("advance")
+	await create_timer(0.4).timeout
+	dialogue_controller.call("advance")
+	await create_timer(0.2).timeout
+	dialogue_controller.call("advance")
+	await create_timer(0.4).timeout
+	dialogue_controller.call("advance")
 	await process_frame
 	if not player.get("control_enabled") or target.get("busy"):
 		_fail("closing dialogue did not restore movement and release the target")

@@ -18,6 +18,7 @@ var control_enabled := true
 var facing := Vector2.DOWN
 var current_target: Area2D
 var _last_prompt: StringName = &""
+var _interaction_blocked_until_msec := 0
 
 
 func _ready() -> void:
@@ -37,7 +38,7 @@ func _physics_process(_delta: float) -> void:
 		_set_animation(_facing_name(), false)
 	move_and_slide()
 	_select_interaction()
-	if control_enabled and Input.is_action_just_pressed("interact") and current_target != null:
+	if control_enabled and Time.get_ticks_msec() >= _interaction_blocked_until_msec and Input.is_action_just_pressed("interact") and current_target != null:
 		current_target.call("interact")
 
 
@@ -45,6 +46,8 @@ func set_control_enabled(value: bool) -> void:
 	control_enabled = value
 	if not value:
 		velocity = Vector2.ZERO
+	else:
+		_interaction_blocked_until_msec = Time.get_ticks_msec() + 150
 
 
 func set_facing(value: Vector2) -> void:

@@ -17,6 +17,9 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 [autoload]
 
 TextCatalog="*res://scripts/autoload/text_catalog.gd"
+Settings="*res://scripts/autoload/settings.gd"
+GameState="*res://scripts/autoload/game_state.gd"
+DialogueController="*res://scripts/autoload/dialogue_controller.gd"
 
 [display]
 

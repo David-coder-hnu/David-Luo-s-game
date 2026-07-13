@@ -29,7 +29,10 @@ func _initialize() -> void:
 	ProjectSettings.set_setting("rendering/2d/snap/snap_2d_transforms_to_pixel", true)
 	ProjectSettings.set_setting("rendering/2d/snap/snap_2d_vertices_to_pixel", true)
 	ProjectSettings.set_setting("audio/driver/enable_input", false)
+	ProjectSettings.set_setting("autoload/Settings", "*res://scripts/autoload/settings.gd")
+	ProjectSettings.set_setting("autoload/GameState", "*res://scripts/autoload/game_state.gd")
 	ProjectSettings.set_setting("autoload/TextCatalog", "*res://scripts/autoload/text_catalog.gd")
+	ProjectSettings.set_setting("autoload/DialogueController", "*res://scripts/autoload/dialogue_controller.gd")
 
 	for action_name: String in ACTION_KEYS:
 		var events: Array[InputEvent] = []
