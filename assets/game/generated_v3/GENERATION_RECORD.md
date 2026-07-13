@@ -21,6 +21,11 @@ V3 将生成式位图作为玩家可见美术的主要来源。旧的确定性 S
 | `characters/qin_zheng_sheet_chroma.png` | 秦峥四方向四步态生成母版，品红键控背景 | `fb721e29831d26c9e8eddd9319ab9817384d06cf2b2769dddb900976768fa3f4` |
 | `characters/qin_zheng_sheet_alpha.png` | 使用内置技能键控工具生成的透明母版 | `998d6bf3a056e10744a5e1a7412f1a70eef7172f9da8732639a03ffd26c188f4` |
 | `characters/qin_zheng_spritesheet.png` | 最大连通主体清理、统一缩放后的 128×192 Godot 精灵表 | `1f1d01e19e9ac01632c85930a3396f0762be40f5c9dfdc812b931286e155b3bd` |
+| `runtime/rooms/bedroom_loop1.png` | 第一轮卧室 640×360 最近邻运行时背景 | `0a544d15de14895b0b6817df8cbfee1a2c95af7e7fd90fd2bf94ff3e1f9d5595` |
+| `runtime/rooms/hallway_loop1.png` | 第一轮走廊 640×360 最近邻运行时背景 | `a4dbf720d8ef6f52347c62e41317e0b5f7ad866830ad2665a18a63362a721670` |
+| `runtime/rooms/kitchen_loop1.png` | 第一轮厨房 640×360 最近邻运行时背景 | `6eb3b71c18da845bada17057708dbea5e0fe8cab2b103da1c2e98d224f50eab6` |
+| `runtime/rooms/child_room_loop1.png` | 第一轮儿童房水平校正后 640×360 最近邻运行时背景 | `c818e62501e8bf64a6c81064333a4b952a7bbc67bceb308e3c8f6693d5f6ec4b` |
+| `runtime/rooms/living_room_loop1.png` | 第一轮客厅 640×360 最近邻运行时背景 | `813c11c33a36ca5271917a3aad0ec1f9d78652a5989e2d374a2b8a4be5beff69` |
 
 母版提示的核心约束：高完成度正交俯视像素美术；可信的三口之家客厅；入口、家庭桌、照片形成主视线，时钟位于独立视线；冷暗环境与克制暖灯；无怪物、血液、宗教符号、文字和水印。
 
@@ -42,3 +47,12 @@ python3 "$HOME/.codex/skills/.system/imagegen/scripts/remove_chroma_key.py" \
   --opaque-threshold 220 --despill
 python3 tools/process_generated_character.py
 ```
+
+房间运行时处理命令：
+
+```sh
+"$HOME/Applications/Godot-4.6.3-stable.app/Contents/MacOS/Godot" \
+  --headless --path . --script tools/godot/process_v3_rooms.gd
+```
+
+处理器固定输出 640×360 PNG 并使用最近邻缩放；儿童房额外水平校正，以匹配中央走廊位于房间左侧的连接关系。生成背景只负责可见画面，Godot 中的 V2 TileMap 与道具节点保持隐藏，并继续提供稳定的房间网格、门洞、碰撞与交互坐标。

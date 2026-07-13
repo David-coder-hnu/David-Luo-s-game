@@ -28,3 +28,13 @@ GODOT="$HOME/Applications/Godot-4.6.3-stable.app/Contents/MacOS/Godot"
 ```
 
 将 `--capture-room` 换成 `hallway`、`kitchen`、`child_room` 或 `living_room`，并同步修改输出文件名，即可复现其余截图。截图必须使用实际图形后端；`--headless` 的 dummy 渲染器没有可读取的帧缓冲。
+
+## V3 第一轮五房间实机截图
+
+- `runtime/v3_first_loop_bedroom.png`
+- `runtime/v3_first_loop_hallway.png`
+- `runtime/v3_first_loop_kitchen.png`
+- `runtime/v3_first_loop_child_room.png`
+- `runtime/v3_first_loop_living_room.png`
+
+这组截图使用与上方相同的引擎、渲染器和 640×360 输出流程。玩家可见环境已替换为生成式 V3 运行时背景，秦峥使用 V3 四方向精灵；V2 TileMap 与道具图集仅作为隐藏的碰撞、房间坐标和开发回退层。状态为 `REVIEW`，尚不代表第二轮覆盖层、惩罚态或移动碰撞观感已经批准。

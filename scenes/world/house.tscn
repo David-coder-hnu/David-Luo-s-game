@@ -17,11 +17,16 @@ offset_bottom = 1216.0
 mouse_filter = 2
 color = Color(0.0117647, 0.0156863, 0.027451, 1)
 
-[node name="Tiles" type="TileMapLayer" parent="."]
+[node name="RoomBackgrounds" type="Node2D" parent="."]
 z_index = -10
+
+[node name="Tiles" type="TileMapLayer" parent="."]
+visible = false
+z_index = -9
 tile_set = SubResource("TileSet_runtime")
 
 [node name="PropsBack" type="Node2D" parent="."]
+visible = false
 
 [node name="Solids" type="Node2D" parent="."]
 
@@ -29,9 +34,10 @@ tile_set = SubResource("TileSet_runtime")
 position = Vector2(816, 240)
 
 [node name="PropsFront" type="Node2D" parent="."]
+visible = false
 
 [node name="Lighting" type="CanvasModulate" parent="."]
-color = Color(0.68, 0.72, 0.78, 1)
+color = Color(1, 1, 1, 1)
 
 [node name="RoomCamera" type="Camera2D" parent="."]
 position = Vector2(800, 240)

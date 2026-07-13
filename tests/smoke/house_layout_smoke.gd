@@ -33,6 +33,17 @@ func _run() -> void:
 	if tile_layer.get_used_cells().size() < 650:
 		_fail("five-room tile coverage is incomplete: %s" % tile_layer.get_used_cells().size())
 		return
+	var room_backgrounds := house.get_node_or_null("RoomBackgrounds")
+	if room_backgrounds == null or room_backgrounds.get_child_count() != 5:
+		_fail("five V3 runtime room backgrounds are not wired into the house")
+		return
+	var visible_backgrounds := 0
+	for background: CanvasItem in room_backgrounds.get_children():
+		if background.visible:
+			visible_backgrounds += 1
+	if visible_backgrounds != 1:
+		_fail("exactly one V3 room background must be visible")
+		return
 	for opening: Vector2i in OPENING_CELLS:
 		if house.call("is_wall_cell", opening) or not house.call("is_walkable_cell", opening):
 			_fail("door opening is blocked: %s" % opening)

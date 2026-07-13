@@ -94,10 +94,10 @@ flowchart LR
 ### First-loop runtime tour
 
 <p align="center">
-  <img src="docs/evidence/runtime/bedroom_first_playable.png" width="640" alt="Godot 4.6.3 实机运行的第一轮卧室：可操控秦峥面对调查提示">
+  <img src="docs/evidence/runtime/v3_first_loop_living_room.png" width="640" alt="Godot 4.6.3 实机运行的生成式 V3 第一轮客厅与可操控秦峥">
 </p>
 
-> Godot 4.6.3 在 Mac 开发环境实际运行，使用连通的 `TileMapLayer`、角色碰撞、房间相机和近距离调查系统；所有图片保持 640×360 原生逻辑画布，不冒充最终发布画面。
+> Godot 4.6.3 在 Mac 开发环境实际运行。玩家可见环境与秦峥均使用生成式 V3 运行时资产；隐藏 TileMap 继续负责稳定碰撞、房间坐标与交互。所有图片保持 640×360 原生逻辑画布，不冒充最终发布画面。
 
 <details>
 <summary><strong>查看其余四个房间的真实运行画面</strong></summary>
@@ -105,11 +105,11 @@ flowchart LR
 
 | 走廊 | 厨房 |
 |---|---|
-| <img src="docs/evidence/runtime/first_loop_hallway.png" width="320" alt="第一轮走廊 Godot 实机截图"> | <img src="docs/evidence/runtime/first_loop_kitchen.png" width="320" alt="第一轮厨房 Godot 实机截图"> |
+| <img src="docs/evidence/runtime/v3_first_loop_hallway.png" width="320" alt="第一轮 V3 走廊 Godot 实机截图"> | <img src="docs/evidence/runtime/v3_first_loop_kitchen.png" width="320" alt="第一轮 V3 厨房 Godot 实机截图"> |
 
 | 儿童房 | 客厅 |
 |---|---|
-| <img src="docs/evidence/runtime/first_loop_child_room.png" width="320" alt="第一轮儿童房 Godot 实机截图"> | <img src="docs/evidence/runtime/first_loop_living_room.png" width="320" alt="第一轮客厅 Godot 实机截图"> |
+| <img src="docs/evidence/runtime/v3_first_loop_child_room.png" width="320" alt="第一轮 V3 儿童房 Godot 实机截图"> | <img src="docs/evidence/runtime/v3_first_loop_bedroom.png" width="320" alt="第一轮 V3 卧室 Godot 实机截图"> |
 
 截图复现方式、引擎与渲染信息见 [`docs/evidence/`](docs/evidence/README.md)。
 </details>

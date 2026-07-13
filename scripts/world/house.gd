@@ -2,6 +2,13 @@ extends Node2D
 
 const ENVIRONMENT_ATLAS := preload("res://assets/game/atlases/environment_tiles.png")
 const PROPS_ATLAS := preload("res://assets/game/atlases/props_atlas.png")
+const V3_ROOM_TEXTURES := {
+	&"bedroom": preload("res://assets/game/generated_v3/runtime/rooms/bedroom_loop1.png"),
+	&"hallway": preload("res://assets/game/generated_v3/runtime/rooms/hallway_loop1.png"),
+	&"kitchen": preload("res://assets/game/generated_v3/runtime/rooms/kitchen_loop1.png"),
+	&"child_room": preload("res://assets/game/generated_v3/runtime/rooms/child_room_loop1.png"),
+	&"living_room": preload("res://assets/game/generated_v3/runtime/rooms/living_room_loop1.png"),
+}
 const INTERACTABLE_SCRIPT := preload("res://scripts/world/interactable.gd")
 const FRAGMENT_DATA_PATH := "res://data/fragments/fragments.json"
 
@@ -24,6 +31,7 @@ const ROOM_CAMERA_CENTERS := {
 }
 
 @onready var tiles: TileMapLayer = $Tiles
+@onready var room_backgrounds: Node2D = $RoomBackgrounds
 @onready var props_back: Node2D = $PropsBack
 @onready var props_front: Node2D = $PropsFront
 @onready var solids: Node2D = $Solids
@@ -38,12 +46,14 @@ var _walkable_cells: Dictionary = {}
 var _current_room_id: StringName = &"bedroom"
 var _fragment_definitions: Dictionary = {}
 var _pending_fragment_id: StringName = &""
+var _room_background_sprites: Dictionary = {}
 
 
 func _ready() -> void:
 	if GameState.snapshot_for_debug()["phase"] == &"title":
 		GameState.start_new_game()
 	_build_tile_map()
+	_build_v3_backgrounds()
 	_build_props()
 	_load_fragment_definitions()
 	_build_fragment_interactions()
@@ -62,6 +72,7 @@ func _process(_delta: float) -> void:
 	var room_id := room_id_for_position(player.global_position)
 	if not room_id.is_empty() and room_id != _current_room_id:
 		_current_room_id = room_id
+		_set_active_v3_background(room_id)
 		hud.set_room(room_id)
 		GameState.record_room_entry(room_id)
 
@@ -92,6 +103,23 @@ func _build_tile_map() -> void:
 	_build_room(Rect2i(2, 11, 16, 11), &"kitchen", [Vector2i(17, 15), Vector2i(17, 16)])
 	_build_room(Rect2i(32, 11, 16, 11), &"wood", [Vector2i(32, 15), Vector2i(32, 16)])
 	_build_room(Rect2i(14, 22, 22, 14), &"living", [Vector2i(24, 22), Vector2i(25, 22)])
+
+
+func _build_v3_backgrounds() -> void:
+	for room_id: StringName in V3_ROOM_TEXTURES:
+		var sprite := Sprite2D.new()
+		sprite.name = "%sV3" % String(room_id).to_pascal_case()
+		sprite.texture = V3_ROOM_TEXTURES[room_id]
+		sprite.position = ROOM_CAMERA_CENTERS[room_id]
+		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		sprite.visible = room_id == _current_room_id
+		room_backgrounds.add_child(sprite)
+		_room_background_sprites[room_id] = sprite
+
+
+func _set_active_v3_background(room_id: StringName) -> void:
+	for candidate_id: StringName in _room_background_sprites:
+		(_room_background_sprites[candidate_id] as Sprite2D).visible = candidate_id == room_id
 
 
 func _build_room(rect: Rect2i, floor_type: StringName, openings: Array) -> void:
@@ -362,10 +390,13 @@ func _place_player_for_capture(room_id: StringName) -> void:
 		&"hallway": Vector2(800, 528),
 		&"kitchen": Vector2(336, 544),
 		&"child_room": Vector2(1312, 544),
-		&"living_room": Vector2(800, 800),
+		&"living_room": Vector2(800, 928),
 	}
 	player.global_position = positions.get(room_id, positions[&"bedroom"])
 	player.set_facing(Vector2.LEFT if room_id == &"bedroom" else Vector2.DOWN)
+	_current_room_id = room_id if room_id in ROOM_RECTS else &"bedroom"
+	_set_active_v3_background(_current_room_id)
+	hud.set_room(_current_room_id)
 
 
 func _capture_runtime(path: String) -> void:
