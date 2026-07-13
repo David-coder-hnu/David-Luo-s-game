@@ -39,7 +39,10 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	_select_interaction()
 	if control_enabled and Time.get_ticks_msec() >= _interaction_blocked_until_msec and Input.is_action_just_pressed("interact") and current_target != null:
-		current_target.call("interact")
+		current_target.call("interact", {
+			"player": self,
+			"game_snapshot": GameState.snapshot_for_debug(),
+		})
 
 
 func set_control_enabled(value: bool) -> void:
@@ -89,34 +92,37 @@ func _facing_name() -> String:
 
 func _select_interaction() -> void:
 	var best_target: Area2D
-	var best_front := -1.0
-	var best_distance := INF
+	var best_in_front := false
+	var best_distance_squared := INF
 	var best_id := ""
+	var snapshot := GameState.snapshot_for_debug()
 	for node: Node in get_tree().get_nodes_in_group(&"interactable"):
 		var candidate := node as Area2D
-		if candidate == null:
+		if candidate == null or not candidate.has_method("get_interaction_score") or not candidate.has_method("can_interact"):
 			continue
-		var offset := candidate.global_position - global_position
-		var distance := offset.length()
-		if distance > INTERACTION_DISTANCE:
+		if not candidate.call("can_interact", snapshot):
 			continue
-		var front := facing.dot(offset.normalized())
-		var candidate_id := String(candidate.get("interaction_id"))
-		if front > best_front + 0.001 or (
-			is_equal_approx(front, best_front) and (
-				distance < best_distance - 0.001 or (
-					is_equal_approx(distance, best_distance) and candidate_id < best_id
+		var score: Dictionary = candidate.call("get_interaction_score", global_position, facing)
+		var distance_squared: float = score["distance_squared"]
+		if distance_squared > INTERACTION_DISTANCE * INTERACTION_DISTANCE:
+			continue
+		var in_front: bool = score["in_front"]
+		var candidate_id := String(score["interaction_id"])
+		if (in_front and not best_in_front) or (
+			in_front == best_in_front and (
+				distance_squared < best_distance_squared - 0.001 or (
+					is_equal_approx(distance_squared, best_distance_squared) and candidate_id < best_id
 				)
 			)
 		):
 			best_target = candidate
-			best_front = front
-			best_distance = distance
+			best_in_front = in_front
+			best_distance_squared = distance_squared
 			best_id = candidate_id
 	current_target = best_target
 	var next_prompt: StringName = &""
 	if current_target != null:
-		next_prompt = current_target.get("prompt_key")
+		next_prompt = current_target.call("get_prompt_key", snapshot)
 	if next_prompt != _last_prompt:
 		_last_prompt = next_prompt
 		interaction_changed.emit(next_prompt)

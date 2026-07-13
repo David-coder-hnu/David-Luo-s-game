@@ -58,6 +58,7 @@ func _process(_delta: float) -> void:
 	if not room_id.is_empty() and room_id != _current_room_id:
 		_current_room_id = room_id
 		hud.set_room(room_id)
+		GameState.record_room_entry(room_id)
 
 
 func _build_tile_map() -> void:

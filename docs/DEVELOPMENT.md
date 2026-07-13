@@ -1,6 +1,6 @@
 # 开发环境与基础命令
 
-状态：**F-01 Mac 开发基线**<br>
+状态：**Mac 开发基线与灰盒验证入口**<br>
 最后更新：2026-07-13
 
 本项目在 Apple Silicon Mac 上开发，使用 Godot `4.6.3-stable` Standard（非 .NET）版本和 GDScript。首发与发布验收平台仍是 Windows x86_64；Mac 本地运行不扩大产品平台范围。
@@ -34,6 +34,7 @@ GODOT="$HOME/Applications/Godot-4.6.3-stable.app/Contents/MacOS/Godot"
 "$GODOT" --headless --path . --script tests/smoke/dialogue_smoke.gd
 "$GODOT" --headless --path . --script tests/smoke/playable_bedroom_smoke.gd
 "$GODOT" --headless --path . --script tests/smoke/house_layout_smoke.gd
+"$GODOT" --headless --path . --script tests/smoke/interaction_room_smoke.gd
 ```
 
 测试分别覆盖项目契约、设置损坏恢复与重载、六种碎片顺序和状态不变量、中文两页文本的快进/输入保护，以及卧室移动—调查—文本—恢复控制闭环。

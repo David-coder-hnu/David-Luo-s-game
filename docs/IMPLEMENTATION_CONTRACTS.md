@@ -172,13 +172,15 @@ accessibility_variant: Dictionary | empty
 
 ```text
 get_interaction_id() -> StringName
-get_priority(player_position, facing) -> InteractionScore
+get_interaction_score(player_position, facing) -> InteractionScore
 can_interact(game_snapshot) -> bool
 get_prompt_key(game_snapshot) -> StringName
 interact(context) -> void
 ```
 
 `InteractionScore` 由正前方、距离、稳定 ID 组成。选择顺序固定，不能依赖节点树遍历。
+
+接口使用 `get_interaction_score` 而不是 `get_priority`，因为 Godot `Area2D` 已占用无参数原生方法 `get_priority()`；项目方法不得覆盖或影射该原生 API。
 
 交互开始后对象进入 busy；只有收到文本完成、取消或场景退出事件才解除。重复按键被忽略，不排队。
 
