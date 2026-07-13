@@ -1,0 +1,73 @@
+extends SceneTree
+
+
+func _initialize() -> void:
+	call_deferred("_run")
+
+
+func _run() -> void:
+	var house_scene := load("res://scenes/world/house.tscn") as PackedScene
+	if house_scene == null:
+		_fail("house scene could not be loaded")
+		return
+	var house := house_scene.instantiate()
+	root.add_child(house)
+	await process_frame
+
+	var tile_layer := house.get_node_or_null("Tiles") as TileMapLayer
+	if tile_layer == null or tile_layer.get_used_cells().size() < 80:
+		_fail("bedroom TileMapLayer is missing or incomplete")
+		return
+	var player := house.get_node_or_null("Player") as CharacterBody2D
+	if player == null:
+		_fail("playable CharacterBody2D is missing")
+		return
+	if player.collision_layer != 2 or player.collision_mask != 1:
+		_fail("player collision layers do not match the contract")
+		return
+	if get_nodes_in_group(&"interactable").size() != 3:
+		_fail("bedroom must expose exactly three teaching interactions")
+		return
+	var text_catalog := root.get_node_or_null("TextCatalog")
+	if text_catalog == null:
+		_fail("TextCatalog autoload is missing")
+		return
+	for key: StringName in [
+		&"ui.phase.loop1_bedroom",
+		&"ui.action.inspect",
+		&"bedroom.bed.inspect",
+		&"bedroom.table.inspect",
+		&"bedroom.window.inspect",
+	]:
+		if not text_catalog.call("has_key", key):
+			_fail("missing localization key: %s" % key)
+			return
+
+	player.global_position = Vector2(800, 192)
+	player.call("set_facing", Vector2.LEFT)
+	await physics_frame
+	await physics_frame
+	var target: Area2D = player.get("current_target")
+	if target == null:
+		_fail("reachable teaching interaction was not selected")
+		return
+	target.call("interact")
+	await process_frame
+	var hud := house.get_node("GameHUD")
+	if not hud.get("dialogue_open") or player.get("control_enabled"):
+		_fail("interaction did not open dialogue and lock movement")
+		return
+	hud.call("close_dialogue")
+	await process_frame
+	if not player.get("control_enabled") or target.get("busy"):
+		_fail("closing dialogue did not restore movement and release the target")
+		return
+
+	print("PLAYABLE_BEDROOM_SMOKE_OK")
+	house.queue_free()
+	quit()
+
+
+func _fail(message: String) -> void:
+	push_error("PLAYABLE_BEDROOM_SMOKE_FAILED: %s" % message)
+	quit(1)

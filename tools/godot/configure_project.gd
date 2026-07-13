@@ -26,7 +26,10 @@ func _initialize() -> void:
 	ProjectSettings.set_setting("rendering/renderer/rendering_method.mobile", "gl_compatibility")
 	ProjectSettings.set_setting("rendering/textures/default_filters/use_nearest_mipmap_filter", false)
 	ProjectSettings.set_setting("rendering/textures/canvas_textures/default_texture_filter", 0)
+	ProjectSettings.set_setting("rendering/2d/snap/snap_2d_transforms_to_pixel", true)
+	ProjectSettings.set_setting("rendering/2d/snap/snap_2d_vertices_to_pixel", true)
 	ProjectSettings.set_setting("audio/driver/enable_input", false)
+	ProjectSettings.set_setting("autoload/TextCatalog", "*res://scripts/autoload/text_catalog.gd")
 
 	for action_name: String in ACTION_KEYS:
 		var events: Array[InputEvent] = []

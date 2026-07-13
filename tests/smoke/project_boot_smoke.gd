@@ -26,6 +26,9 @@ func _run() -> void:
 	if ProjectSettings.get_setting("display/window/stretch/scale_mode") != "integer":
 		_fail("stretch scale mode is not integer")
 		return
+	if ProjectSettings.get_setting("autoload/TextCatalog", "") != "*res://scripts/autoload/text_catalog.gd":
+		_fail("TextCatalog autoload is not configured")
+		return
 
 	for action_name: String in REQUIRED_ACTIONS:
 		if not InputMap.has_action(action_name):

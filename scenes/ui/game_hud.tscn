@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/game_hud.gd" id="1_hud"]
+
+[node name="GameHUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="RoomTag" type="Label" parent="."]
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 190.0
+offset_bottom = 40.0
+text = ""
+theme_override_colors/font_color = Color(0.784314, 0.74902, 0.682353, 0.82)
+theme_override_colors/font_shadow_color = Color(0.0117647, 0.0156863, 0.027451, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 14
+
+[node name="PromptPanel" type="PanelContainer" parent="."]
+visible = false
+offset_left = 264.0
+offset_top = 150.0
+offset_right = 376.0
+offset_bottom = 184.0
+
+[node name="Prompt" type="Label" parent="PromptPanel"]
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.784314, 0.74902, 0.682353, 1)
+theme_override_font_sizes/font_size = 15
+
+[node name="DialoguePanel" type="PanelContainer" parent="."]
+visible = false
+offset_left = 24.0
+offset_top = 246.0
+offset_right = 616.0
+offset_bottom = 336.0
+
+[node name="Margin" type="MarginContainer" parent="DialoguePanel"]
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 12
+
+[node name="Text" type="Label" parent="DialoguePanel/Margin"]
+text = ""
+autowrap_mode = 2
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.784314, 0.74902, 0.682353, 1)
+theme_override_font_sizes/font_size = 16

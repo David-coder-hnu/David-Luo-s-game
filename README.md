@@ -87,7 +87,15 @@ flowchart LR
 - 第一轮先建立可信住宅；第二轮让同一件日常物品开始指控玩家。
 - 执行者没有精灵。恐怖来自光源消失、声音停止和可见距离缩短。
 
-> 主视觉是概念目标，不是游戏实机截图。所有游戏内资产将按同一色板重新进行像素制作与实机验证。
+> 主视觉是概念目标，不是游戏实机截图。游戏内资产按同一色板制作，并以 Godot 运行证据逐项验收。
+
+### First playable frame
+
+<p align="center">
+  <img src="docs/evidence/runtime/bedroom_first_playable.png" width="640" alt="Godot 4.6.3 实机运行的第一轮卧室：可操控秦峥面对调查提示">
+</p>
+
+> Godot 4.6.3 在 Mac 开发环境实际运行，使用 `TileMapLayer`、角色碰撞和近距离调查系统；这是第一轮卧室开发证据，不冒充五房间或最终发布画面。
 
 <details>
 <summary><strong>查看垂直切片图像资产 V2（REVIEW）</strong></summary>
@@ -104,7 +112,7 @@ flowchart LR
 | <img src="assets/game/closeups/child_drawing_loop1.png" width="320" alt="第一轮儿童画"> | <img src="assets/game/closeups/child_drawing_loop2.png" width="320" alt="第二轮儿童画"> |
 | <img src="assets/game/closeups/wedding_photo_loop1.png" width="320" alt="第一轮婚纱照"> | <img src="assets/game/closeups/wedding_photo_loop2.png" width="320" alt="第二轮婚纱照"> |
 
-环境瓦片、83 个稳定图集区域、角色帧、UI、FX、640×360构图标杆与全部可编辑源文件见 [`assets/game/`](assets/game/README.md)。运行时资产当前为 `REVIEW`，不会在缺少 Godot 截图时冒充发布级成品。
+环境瓦片、83 个稳定图集区域、角色帧、UI、FX、640×360构图标杆与全部可编辑源文件见 [`assets/game/`](assets/game/README.md)。运行时资产当前仍为 `REVIEW`；首张卧室证据不能替代其余房间、第二轮和惩罚态评审。
 </details>
 
 <details>

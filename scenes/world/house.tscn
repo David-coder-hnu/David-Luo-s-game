@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/house.gd" id="1_house"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/game_hud.tscn" id="3_hud"]
+
+[sub_resource type="TileSet" id="TileSet_runtime"]
+tile_size = Vector2i(32, 32)
+
+[node name="House" type="Node2D"]
+script = ExtResource("1_house")
+
+[node name="Background" type="ColorRect" parent="."]
+z_index = -20
+offset_right = 1600.0
+offset_bottom = 1216.0
+mouse_filter = 2
+color = Color(0.0117647, 0.0156863, 0.027451, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="."]
+z_index = -10
+tile_set = SubResource("TileSet_runtime")
+
+[node name="PropsBack" type="Node2D" parent="."]
+
+[node name="Solids" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(816, 240)
+
+[node name="PropsFront" type="Node2D" parent="."]
+
+[node name="Lighting" type="CanvasModulate" parent="."]
+color = Color(0.68, 0.72, 0.78, 1)
+
+[node name="RoomCamera" type="Camera2D" parent="."]
+position = Vector2(800, 240)
+position_smoothing_enabled = false
+limit_left = 0
+limit_top = 0
+limit_right = 1600
+limit_bottom = 1216
+
+[node name="GameHUD" parent="." instance=ExtResource("3_hud")]
