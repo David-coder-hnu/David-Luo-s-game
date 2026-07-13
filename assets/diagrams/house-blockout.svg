@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="760" viewBox="0 0 1000 760" role="img" aria-labelledby="title desc">
+  <title id="title">Hell Cycle five-room blockout</title>
+  <desc id="desc">A cross-shaped five-room floor plan with bedroom north, kitchen west, child room east, living room south, and a central hallway.</desc>
+  <defs>
+    <pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse">
+      <path d="M18 0H0V18" fill="none" stroke="#40525A" stroke-opacity="0.16" stroke-width="1"/>
+    </pattern>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1000" height="760" rx="18" fill="#0B0C14"/>
+  <rect x="50" y="40" width="900" height="684" fill="url(#grid)"/>
+  <text x="50" y="28" fill="#69656A" font-family="Arial, sans-serif" font-size="14" letter-spacing="3">50 × 38 TILE BLOCKOUT · 16 PX GRID</text>
+
+  <g stroke="#40525A" stroke-width="3">
+    <rect x="410" y="76" width="180" height="162" rx="4" fill="#242936"/>
+    <rect x="374" y="238" width="252" height="198" rx="4" fill="#171A23"/>
+    <rect x="86" y="238" width="288" height="198" rx="4" fill="#202631"/>
+    <rect x="626" y="238" width="288" height="198" rx="4" fill="#252A35"/>
+    <rect x="302" y="436" width="396" height="252" rx="4" fill="#222630"/>
+  </g>
+
+  <g font-family="Georgia, 'Noto Serif SC', serif" text-anchor="middle">
+    <text x="500" y="145" fill="#C8BFAE" font-size="26">卧室</text>
+    <text x="500" y="172" fill="#69656A" font-size="13" letter-spacing="3">BEDROOM</text>
+    <text x="500" y="326" fill="#C8BFAE" font-size="26">走廊</text>
+    <text x="500" y="353" fill="#69656A" font-size="13" letter-spacing="3">HALLWAY</text>
+    <text x="230" y="326" fill="#C8BFAE" font-size="26">厨房</text>
+    <text x="230" y="353" fill="#69656A" font-size="13" letter-spacing="3">KITCHEN</text>
+    <text x="770" y="326" fill="#C8BFAE" font-size="26">儿童房</text>
+    <text x="770" y="353" fill="#69656A" font-size="13" letter-spacing="3">CHILD ROOM</text>
+    <text x="500" y="548" fill="#C8BFAE" font-size="26">客厅</text>
+    <text x="500" y="575" fill="#69656A" font-size="13" letter-spacing="3">LIVING ROOM</text>
+  </g>
+
+  <g fill="#C29A5B" filter="url(#glow)">
+    <circle cx="176" cy="382" r="7"/>
+    <circle cx="824" cy="382" r="7"/>
+    <circle cx="626" cy="562" r="7"/>
+    <circle cx="374" cy="472" r="7"/>
+  </g>
+  <g fill="#8D3035" filter="url(#glow)">
+    <circle cx="608" cy="256" r="7"/>
+  </g>
+  <g fill="#C8BFAE">
+    <path d="M492 189 l8 -13 l8 13 v16 h-16z"/>
+  </g>
+
+  <g stroke="#C29A5B" stroke-width="5">
+    <path d="M482 238 h36"/>
+    <path d="M374 316 v36"/>
+    <path d="M626 316 v36"/>
+    <path d="M482 436 h36"/>
+  </g>
+  <path d="M590 238 h36" stroke="#8D3035" stroke-width="5"/>
+
+  <g transform="translate(84 706)" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="13">
+    <circle cx="0" cy="0" r="6" fill="#C29A5B"/><text x="14" y="5" fill="#69656A">关键交互</text>
+    <circle cx="126" cy="0" r="6" fill="#8D3035"/><text x="140" y="5" fill="#69656A">不可离开的出口</text>
+    <path d="M292 0 h28" stroke="#C29A5B" stroke-width="4"/><text x="331" y="5" fill="#69656A">开放门洞</text>
+    <path d="M430 0 h28" stroke="#40525A" stroke-width="4"/><text x="469" y="5" fill="#69656A">稳定墙体</text>
+    <path d="M574 -8 l8 -13 l8 13 v16 h-16z" fill="#C8BFAE"/><text x="600" y="5" fill="#69656A">玩家出生</text>
+  </g>
+</svg>

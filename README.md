@@ -1,54 +1,147 @@
-# 地狱轮回 - Hell Cycle
+<p align="center">
+  <img src="assets/branding/hell-cycle-hero.png" width="100%" alt="《地狱轮回》概念主视觉：一栋被黑暗包围的五房间住宅与独自醒来的男人">
+</p>
 
-> 一款 2D 像素心理恐怖游戏。一个男人、一栋房子、一段无法逃脱的罪孽轮回。
+<h1 align="center">地狱轮回</h1>
 
-[![Status](https://img.shields.io/badge/status-prototype-inactive?style=flat)](https://github.com/David-coder-hnu/David-Luo-s-game)
-[![Engine](https://img.shields.io/badge/engine-Godot%204.x-478cbf?style=flat&logo=godot-engine)](https://godotengine.org/)
-[![License](https://img.shields.io/badge/license-MIT-green?style=flat)](LICENSE)
+<p align="center">
+  <strong>HELL CYCLE</strong><br>
+  <em>恢复记忆不是胜利。恢复记忆，是惩罚的前奏。</em>
+</p>
 
-## 故事
+<p align="center">
+  <a href="docs/VERTICAL_SLICE.md"><img alt="Milestone" src="https://img.shields.io/badge/milestone-two--loop%20vertical%20slice-C29A5B?style=flat-square"></a>
+  <a href="docs/DECISIONS.md"><img alt="Design" src="https://img.shields.io/badge/design-production%20ready-40525A?style=flat-square"></a>
+  <a href="https://godotengine.org/download/archive/4.6.3-stable/"><img alt="Godot" src="https://img.shields.io/badge/Godot-4.6.3-478CBF?style=flat-square&logo=godotengine&logoColor=white"></a>
+  <img alt="Platform" src="https://img.shields.io/badge/target-Windows-242936?style=flat-square&logo=windows11&logoColor=white">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/code%20%26%20docs-MIT-8D3035?style=flat-square"></a>
+</p>
 
-一个男人酗酒后杀害了妻子和孩子。悔恨中，他放火烧了房子，自己也葬身火海。
-
-他堕入地狱——但地狱的模样，正是他曾经的家。
-
-在地狱里，他失去了所有记忆。他必须一遍遍轮回自己的房子，一次次找回记忆碎片。当真相终于拼凑完整——地狱之神现身，将他折磨至死后，再次投入新的轮回。
-
-**恢复记忆不是胜利。恢复记忆是惩罚的前奏。**
-
-## 核心设计
-
-| 维度 | 选择 |
-|------|------|
-| 类型 | 心理恐怖 |
-| 风格 | 2D 像素探索（日式 RPG Maker 恐怖传统） |
-| 引擎 | Godot 4.x |
-| 进步系统 | 纯知识驱动——改变的不是角色，是玩家脑子里的理解 |
-| 核心创新 | **"进度即陷阱"**——越接近真相，离痛苦就越近 |
-| 目标体验 | 单人沉浸——关灯、戴耳机、独自玩 |
-
-## 路线图
-
-- [x] `/office-hours` — 设计文档（概念、前提、方案）
-- [x] `/plan-ceo-review` — CEO 战略（完整游戏路线图，3-5 月）
-- [x] `/plan-eng-review` — 工程评审（架构、代码质量、测试策略）
-- [ ] **Phase 1: 周末原型** — Godot tilemap 房子 + 3 个记忆碎片 + 地狱之神过场 + 轮回重置
-- [ ] Phase 2: 系统搭建 — 知识图谱、轮回管理器、程序化变异 v1
-- [ ] Phase 3: 完整叙事 — 12-20 个碎片、多轮回弧线、音效设计
-- [ ] Phase 4: 打磨发布 — 美术资产、itch.io 上架
-
-## 参考系
-
-Ib · 魔女之家 · 狂父 · Outer Wilds · The Stanley Parable · Lily's Well
-
-## 设计文档
-
-完整设计文档、CEO 战略和工程评审见 [`docs/design/`](docs/design/)。
-
-## 许可
-
-MIT — 自由使用、修改、分发。详见 [LICENSE](LICENSE)。
+<p align="center">
+  <a href="#-the-house-remembers">游戏理念</a> ·
+  <a href="#-current-milestone">当前里程碑</a> ·
+  <a href="#-visual-language">视觉语言</a> ·
+  <a href="#-designed-before-coded">制作规格</a>
+</p>
 
 ---
 
-*"你每次都先检查厨房。每一次。43 次了。你为什么一直回来？"*
+## The house remembers.
+
+一个失去记忆的男人在陌生又熟悉的卧室醒来。
+
+门外仍是他的家，但物品的位置、墙上的痕迹和远处的声音都在等待他想起什么。每找回一段记忆，房子就变得更安静；每接近一次真相，某个看不见的存在就离他更近。
+
+这里没有战斗，没有能力升级，也没有能够取消过去的完美结局。玩家拥有的唯一力量，是理解——而理解正是陷阱。
+
+<table>
+  <tr>
+    <td width="33%" valign="top"><strong>知识即危险</strong><br><sub>进步不让角色变强，只让玩家越来越清楚自己正在召来什么。</sub></td>
+    <td width="33%" valign="top"><strong>房子会回应</strong><br><sub>变化不是随机惊吓。每个位置、声音和缺席都指向一段具体记忆。</sub></td>
+    <td width="33%" valign="top"><strong>作品有结尾</strong><br><sub>故事中的轮回永远继续，但玩家会完成一段拥有明确情感收束的体验。</sub></td>
+  </tr>
+</table>
+
+## The cycle
+
+```mermaid
+flowchart LR
+    A[醒来<br/>WAKE] --> B[探索<br/>SEARCH]
+    B --> C[记起<br/>REMEMBER]
+    C --> D[被看见<br/>BE SEEN]
+    D --> E[惩罚<br/>PUNISHMENT]
+    E --> A
+
+    style A fill:#242936,stroke:#40525A,color:#C8BFAE
+    style B fill:#242936,stroke:#40525A,color:#C8BFAE
+    style C fill:#242936,stroke:#C29A5B,color:#C8BFAE
+    style D fill:#242936,stroke:#8D3035,color:#C8BFAE
+    style E fill:#0B0C14,stroke:#8D3035,color:#C8BFAE
+```
+
+## Current milestone
+
+当前目标不是一份只能展示技术的原型，而是一个 **12–15 分钟、包含两轮探索、可以正式结束的垂直切片**。
+
+- [x] 产品愿景、叙事责任与剧透边界
+- [x] 双轮流程、逐拍文本与两种结束表达
+- [x] 五房间精确灰盒、状态机和数据契约
+- [x] 美术、UI、音频与完整资产清单
+- [x] AI 任务图、功能验收和盲测阶段门
+- [ ] Godot 灰盒构建
+- [ ] 视觉与声音实装
+- [ ] 五人不知情盲测
+
+切片只验证三个问题：玩家是否会主动调查；知道继续有代价后是否会犹豫；房子回应上一轮行为时，玩家是否感到它记得的是自己。
+
+## Visual language
+
+<p align="center">
+  <img src="assets/branding/visual-language.svg" width="100%" alt="《地狱轮回》视觉语言与核心色板">
+</p>
+
+- **640×360** 内部分辨率，**16×16** 像素网格，整数缩放。
+- 夜墨、冷墙、旧纸、病灯与焦红构成受约束的低饱和色板。
+- 第一轮先建立可信住宅；第二轮让同一件日常物品开始指控玩家。
+- 执行者没有精灵。恐怖来自光源消失、声音停止和可见距离缩短。
+
+> 主视觉是概念目标，不是游戏实机截图。所有游戏内资产将按同一色板重新进行像素制作与实机验证。
+
+<details>
+<summary><strong>查看五房间灰盒</strong></summary>
+<br>
+<p align="center">
+  <img src="assets/diagrams/house-blockout.svg" width="88%" alt="五房间十字型灰盒布局">
+</p>
+
+厨房、儿童房与客厅围绕中央走廊布置，距离保持近似公平；第二轮只改变内容，不改变墙体和通路。
+</details>
+
+## Designed before coded
+
+这个仓库把设计当作可执行规格，而不是灵感备忘录。AI 辅助开发必须依据稳定 ID、任务契约和可复现验收推进，不能自行发明剧情或系统。
+
+| 领域 | 权威文档 | 已锁定内容 |
+|---|---|---|
+| 产品 | [Game Vision](docs/GAME_VISION.md) · [Decisions](docs/DECISIONS.md) | 体验支柱、责任表达、结尾哲学 |
+| 内容 | [Vertical Slice](docs/VERTICAL_SLICE.md) · [Narrative Beats](docs/NARRATIVE_BEATS.md) | 双轮流程、全部关键文本、02:17 谜题 |
+| 视觉 | [Art Bible](docs/ART_BIBLE.md) · [Level Blockout](docs/LEVEL_BLOCKOUT.md) | 色板、像素规范、精确坐标与视线 |
+| 交互 | [UI/UX](docs/UI_UX_SPEC.md) · [Audio Direction](docs/AUDIO_DIRECTION.md) | 屏幕状态、按住确认、逐拍声音 |
+| 工程 | [Technical Design](docs/TECHNICAL_DESIGN.md) · [Contracts](docs/IMPLEMENTATION_CONTRACTS.md) | 状态不变量、接口、信号和错误语义 |
+| 制作 | [Asset Manifest](docs/ASSET_MANIFEST.md) · [AI Build Protocol](docs/AI_BUILD_PROTOCOL.md) | 穷举资产、依赖图、任务完成定义 |
+| 验证 | [Playtest](docs/PLAYTEST.md) · [Roadmap](docs/ROADMAP.md) | 六顺序回归、盲测指标、阶段门 |
+
+完整的文档权威顺序与冲突处理规则见 [`docs/README.md`](docs/README.md)。`docs/design/` 仅保存已归档的立项历史稿。
+
+## Experience target
+
+| 维度 | 垂直切片 |
+|---|---|
+| 类型 | 2D 像素心理恐怖 / 知识驱动探索 |
+| 视角 | 俯视角、连续五房间住宅 |
+| 时长 | 首次游玩 12–15 分钟 |
+| 输入 | <kbd>WASD</kbd> / 方向键移动，<kbd>E</kbd> 调查，<kbd>Esc</kbd> 暂停 |
+| 平台 | Windows x86_64 |
+| 语言 | 简体中文；文本从第一天起外置 |
+| 引擎 | Godot 4.6.3-stable / GDScript |
+| 恐怖手段 | 环境回应、策略性静默、不可见惩罚 |
+
+## Content note
+
+<details>
+<summary>展开内容提示</summary>
+<br>
+本作涉及家庭暴力、酒精依赖、儿童受害、火灾、自杀及死亡等主题。垂直切片不直接呈现暴力过程，而通过环境、文字和声音暗示其后果。酒精、失忆和自毁不会被写成免责或已经完成的赎罪。
+</details>
+
+## Contributing & license
+
+开始贡献前请阅读 [`CONTRIBUTING.md`](CONTRIBUTING.md)。任何变更都必须说明服务于哪条体验原则，并提供相应验收证据。
+
+代码与当前文档采用 [MIT License](LICENSE)。美术、音频、字体及第三方素材按照 [`ASSET_CREDITS.md`](docs/ASSET_CREDITS.md) 逐项登记；没有可靠来源和许可的资产不会进入发布包。
+
+---
+
+<p align="center">
+  <sub>“你记得得越多，它就离你越近。”</sub>
+</p>

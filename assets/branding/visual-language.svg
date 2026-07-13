@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-labelledby="title desc">
+  <title id="title">Hell Cycle visual language</title>
+  <desc id="desc">A dark visual identity board showing the project's muted palette and the cycle from home to memory to punishment.</desc>
+  <defs>
+    <linearGradient id="edge" x1="0" x2="1">
+      <stop offset="0" stop-color="#0B0C14"/>
+      <stop offset="0.52" stop-color="#242936"/>
+      <stop offset="1" stop-color="#0B0C14"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="380" rx="18" fill="#0B0C14"/>
+  <rect x="1" y="1" width="1198" height="378" rx="17" fill="none" stroke="#40525A" stroke-opacity="0.55"/>
+  <path d="M0 330 C220 302 344 362 550 326 C785 286 955 354 1200 314 L1200 380 L0 380Z" fill="#8D3035" opacity="0.12"/>
+  <circle cx="1000" cy="90" r="72" fill="#8D3035" opacity="0.09" filter="url(#soft)"/>
+
+  <text x="64" y="70" fill="#C8BFAE" font-family="Georgia, 'Noto Serif SC', serif" font-size="22" letter-spacing="6">VISUAL LANGUAGE / 视觉语言</text>
+  <text x="64" y="120" fill="#C29A5B" font-family="Georgia, 'Noto Serif SC', serif" font-size="38">熟悉的家，开始拒绝隐瞒。</text>
+  <text x="66" y="155" fill="#69656A" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="17">domestic truth · authored mutation · invisible punishment</text>
+
+  <g transform="translate(64 208)">
+    <g><rect width="112" height="62" rx="8" fill="#0B0C14" stroke="#40525A"/><text x="0" y="88" fill="#69656A" font-size="13" font-family="Arial">NIGHT INK</text></g>
+    <g transform="translate(126)"><rect width="112" height="62" rx="8" fill="#242936"/><text x="0" y="88" fill="#69656A" font-size="13" font-family="Arial">COLD WALL</text></g>
+    <g transform="translate(252)"><rect width="112" height="62" rx="8" fill="#40525A"/><text x="0" y="88" fill="#69656A" font-size="13" font-family="Arial">MIST TEAL</text></g>
+    <g transform="translate(378)"><rect width="112" height="62" rx="8" fill="#C8BFAE"/><text x="0" y="88" fill="#69656A" font-size="13" font-family="Arial">OLD PAPER</text></g>
+    <g transform="translate(504)"><rect width="112" height="62" rx="8" fill="#C29A5B"/><text x="0" y="88" fill="#69656A" font-size="13" font-family="Arial">SICK LIGHT</text></g>
+    <g transform="translate(630)"><rect width="112" height="62" rx="8" fill="#8D3035"/><text x="0" y="88" fill="#69656A" font-size="13" font-family="Arial">EMBER RED</text></g>
+  </g>
+
+  <g transform="translate(855 200)" font-family="Arial, 'Noto Sans SC', sans-serif" text-anchor="middle">
+    <circle cx="0" cy="35" r="30" fill="#242936" stroke="#40525A"/>
+    <circle cx="100" cy="35" r="30" fill="#242936" stroke="#C29A5B"/>
+    <circle cx="200" cy="35" r="30" fill="#242936" stroke="#8D3035"/>
+    <path d="M31 35 H66 M131 35 H166" stroke="#69656A" stroke-width="2" stroke-dasharray="4 5"/>
+    <text x="0" y="41" fill="#C8BFAE" font-size="15">家</text>
+    <text x="100" y="41" fill="#C8BFAE" font-size="15">记忆</text>
+    <text x="200" y="41" fill="#C8BFAE" font-size="15">惩罚</text>
+    <text x="100" y="92" fill="#69656A" font-size="13" letter-spacing="2">THE HOUSE REMEMBERS</text>
+  </g>
+</svg>

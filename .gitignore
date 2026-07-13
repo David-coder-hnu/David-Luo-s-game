@@ -3,7 +3,7 @@
 *.import
 *.translation
 export/
-export_presets.cfg
+export_credentials.cfg
 
 # Godot 4.x mono
 .mono/
