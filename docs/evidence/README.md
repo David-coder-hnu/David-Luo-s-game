@@ -2,19 +2,29 @@
 
 本目录只保存由锁定版本 Godot 实际运行产生的截图、录屏与测试证据。确定性合成预览和概念图不得放入此处冒充实机。
 
-## 第一轮卧室首张可玩截图
+## 第一轮五房间实机截图
 
-文件：`runtime/bedroom_first_playable.png`
+文件：
+
+- `runtime/bedroom_first_playable.png`
+- `runtime/first_loop_hallway.png`
+- `runtime/first_loop_kitchen.png`
+- `runtime/first_loop_child_room.png`
+- `runtime/first_loop_living_room.png`
 
 - 引擎：Godot `4.6.3.stable.official` Standard；
 - 渲染：macOS Compatibility，Apple M4，OpenGL API 4.1 Metal；
 - 输出：640×360，若开发窗口为 2×，只在 Godot 内使用最近邻还原逻辑画布尺寸；
-- 运行内容：`TileMapLayer` 卧室、V2 环境和道具图集、32×48 四方向角色、20×12 脚部碰撞、96 px/s 移动、48 px 调查选择和 HUD 提示；
-- 状态：第一轮卧室开发证据，资产仍为 `REVIEW`，不代表五房间或三状态评审完成。
+- 运行内容：按锁定坐标连通的卧室、走廊、厨房、儿童房与客厅，V2 环境和道具图集、32×48 四方向角色、20×12 脚部碰撞、96 px/s 移动、房间相机和 HUD 房间标签；
+- 状态：第一轮五房间开发证据，资产仍为 `REVIEW`；这些截图不代表第二轮、惩罚态、角色动画或最终发布评审完成。
 
 复现命令：
 
 ```sh
 GODOT="$HOME/Applications/Godot-4.6.3-stable.app/Contents/MacOS/Godot"
-"$GODOT" --path . -- --capture-screenshot=res://docs/evidence/runtime/bedroom_first_playable.png
+"$GODOT" --path . --resolution 1280x720 -- \
+  --capture-room=bedroom \
+  --capture-screenshot=res://docs/evidence/runtime/bedroom_first_playable.png
 ```
+
+将 `--capture-room` 换成 `hallway`、`kitchen`、`child_room` 或 `living_room`，并同步修改输出文件名，即可复现其余截图。截图必须使用实际图形后端；`--headless` 的 dummy 渲染器没有可读取的帧缓冲。

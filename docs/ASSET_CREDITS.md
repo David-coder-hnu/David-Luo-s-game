@@ -14,7 +14,7 @@
 | `assets/diagrams/house-blockout.svg` | 五房间灰盒图 | 项目原创 | MIT | 代码原生 SVG；坐标依据 `LEVEL_BLOCKOUT.md` | 2026-07-13 |
 | `assets/game/source/*.svg`、`assets/game/atlases/*.png`、`assets/game/characters/*.png`、`assets/game/ui/ui_atlas.png`、`assets/game/ui/wordmark.png`、`assets/game/fx/*.png` | 瓦片、道具、角色、UI、FX | 项目确定性生成脚本 | MIT | 由 `tools/build_visual_assets.mjs` 生成；使用美术圣经登记的核心语义色与材料过渡色；V2 为 32px 视觉基线 | 2026-07-13 |
 | `assets/game/previews/bedroom_benchmark.png` | 640×360 构图标杆 | 项目确定性合成脚本 | MIT | 由实际运行时图集通过 `tools/build_art_preview.mjs` 合成；不是 Godot 实机截图 | 2026-07-13 |
-| `docs/evidence/runtime/bedroom_first_playable.png` | 640×360 Godot 实机证据 | 项目原创场景与 V2 运行时图集；Godot 4.6.3 macOS Compatibility 渲染 | MIT | 可操控角色、TileMapLayer、碰撞和调查提示的第一轮卧室运行时截图；不是概念图 | 2026-07-13 |
+| `docs/evidence/runtime/bedroom_first_playable.png`、`docs/evidence/runtime/first_loop_*.png` | 640×360 Godot 实机证据 | 项目原创场景与 V2 运行时图集；Godot 4.6.3 macOS Compatibility 渲染 | MIT | 第一轮五房间、可操控角色、TileMapLayer、碰撞、房间相机和 HUD 的运行时截图；不是概念图 | 2026-07-13 |
 | `assets/game/ui/title_background.png` | 游戏标题背景 | 由项目主视觉受控裁切 | 同主视觉 | 640×360；概念视觉用于标题，不宣称实机场景 | 2026-07-13 |
 | `assets/game/source/generated/*_source.png` | 叙事特写高分辨率母版 | David Luo 项目指导；OpenAI 内置图像生成工具生成 | 由项目所有者按 MIT 分发；同时受生成服务适用条款约束 | 提示与 SHA-256 见同目录 `GENERATION_RECORD.md`；不得直接导入游戏 | 2026-07-13 |
 | `assets/game/closeups/*.png` | 叙事特写运行时图像 | 由上述母版经确定性处理生成 | 同母版 | 320×180、最近邻、有限色、无抖动；处理脚本可复现 | 2026-07-13 |

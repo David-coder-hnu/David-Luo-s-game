@@ -9,6 +9,7 @@ signal dialogue_closed
 @onready var room_tag: Label = $RoomTag
 
 var dialogue_open := false
+var _room_id: StringName = &"bedroom"
 
 
 func _ready() -> void:
@@ -16,6 +17,13 @@ func _ready() -> void:
 	room_tag.text = TextCatalog.get_text(&"ui.phase.loop1_bedroom")
 	DialogueController.page_presented.connect(_on_page_presented)
 	DialogueController.dialogue_finished.connect(_on_dialogue_finished)
+
+
+func set_room(room_id: StringName) -> void:
+	if room_id.is_empty() or room_id == _room_id:
+		return
+	_room_id = room_id
+	room_tag.text = TextCatalog.get_text(StringName("ui.phase.loop1_%s" % room_id))
 
 
 func set_prompt(text_key: StringName) -> void:

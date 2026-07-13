@@ -4,15 +4,37 @@ const ENVIRONMENT_ATLAS := preload("res://assets/game/atlases/environment_tiles.
 const PROPS_ATLAS := preload("res://assets/game/atlases/props_atlas.png")
 const INTERACTABLE_SCRIPT := preload("res://scripts/world/interactable.gd")
 
+const TILE_SIZE := 32
+const MAP_SIZE := Vector2i(50, 38)
+const VIEWPORT_SIZE := Vector2(640, 360)
+const ROOM_RECTS := {
+	&"bedroom": Rect2(20 * TILE_SIZE, 2 * TILE_SIZE, 10 * TILE_SIZE, 9 * TILE_SIZE),
+	&"hallway": Rect2(18 * TILE_SIZE, 11 * TILE_SIZE, 14 * TILE_SIZE, 11 * TILE_SIZE),
+	&"kitchen": Rect2(2 * TILE_SIZE, 11 * TILE_SIZE, 16 * TILE_SIZE, 11 * TILE_SIZE),
+	&"child_room": Rect2(32 * TILE_SIZE, 11 * TILE_SIZE, 16 * TILE_SIZE, 11 * TILE_SIZE),
+	&"living_room": Rect2(14 * TILE_SIZE, 22 * TILE_SIZE, 22 * TILE_SIZE, 14 * TILE_SIZE),
+}
+const ROOM_CAMERA_CENTERS := {
+	&"bedroom": Vector2(800, 240),
+	&"hallway": Vector2(800, 528),
+	&"kitchen": Vector2(320, 528),
+	&"child_room": Vector2(1280, 528),
+	&"living_room": Vector2(800, 928),
+}
+
 @onready var tiles: TileMapLayer = $Tiles
 @onready var props_back: Node2D = $PropsBack
 @onready var props_front: Node2D = $PropsFront
 @onready var solids: Node2D = $Solids
 @onready var player: CharacterBody2D = $Player
+@onready var room_camera: Camera2D = $RoomCamera
 @onready var hud: CanvasLayer = $GameHUD
 
 var _atlas_source_id := -1
 var _active_interactable: Interactable
+var _wall_cells: Dictionary = {}
+var _walkable_cells: Dictionary = {}
+var _current_room_id: StringName = &"bedroom"
 
 
 func _ready() -> void:
@@ -26,63 +48,170 @@ func _ready() -> void:
 	print("HELL_CYCLE_PLAYABLE_OK")
 	var capture_path := _capture_path_from_args()
 	if not capture_path.is_empty():
-		player.global_position = Vector2(796, 184)
-		player.set_facing(Vector2.LEFT)
+		_place_player_for_capture(_capture_room_from_args())
 		_capture_runtime.call_deferred(capture_path)
+
+
+func _process(_delta: float) -> void:
+	room_camera.position = camera_target_for_position(player.global_position).round()
+	var room_id := room_id_for_position(player.global_position)
+	if not room_id.is_empty() and room_id != _current_room_id:
+		_current_room_id = room_id
+		hud.set_room(room_id)
 
 
 func _build_tile_map() -> void:
 	var tile_set := TileSet.new()
-	tile_set.tile_size = Vector2i(32, 32)
+	tile_set.tile_size = Vector2i(TILE_SIZE, TILE_SIZE)
 	var source := TileSetAtlasSource.new()
 	source.texture = ENVIRONMENT_ATLAS
-	source.texture_region_size = Vector2i(32, 32)
+	source.texture_region_size = Vector2i(TILE_SIZE, TILE_SIZE)
 	for atlas_y in 2:
 		for atlas_x in 10:
 			source.create_tile(Vector2i(atlas_x, atlas_y))
 	_atlas_source_id = tile_set.add_source(source)
 	tiles.tile_set = tile_set
 
-	for y in range(3, 10):
-		for x in range(21, 29):
-			tiles.set_cell(Vector2i(x, y), _atlas_source_id, Vector2i((x + y) % 4, 0))
-	for x in range(20, 30):
-		tiles.set_cell(Vector2i(x, 2), _atlas_source_id, Vector2i(x % 4, 1))
-		if x < 24 or x > 25:
-			tiles.set_cell(Vector2i(x, 10), _atlas_source_id, Vector2i((x + 1) % 4, 1))
-	for y in range(3, 11):
-		tiles.set_cell(Vector2i(20, y), _atlas_source_id, Vector2i(6, 1))
-		tiles.set_cell(Vector2i(29, y), _atlas_source_id, Vector2i(7, 1))
-	for y in range(10, 16):
-		for x in range(24, 26):
-			tiles.set_cell(Vector2i(x, y), _atlas_source_id, Vector2i((x + y) % 4, 0))
-		tiles.set_cell(Vector2i(23, y), _atlas_source_id, Vector2i(6, 1))
-		tiles.set_cell(Vector2i(26, y), _atlas_source_id, Vector2i(7, 1))
+	_build_room(Rect2i(20, 2, 10, 9), &"wood", [Vector2i(24, 10), Vector2i(25, 10)])
+	_build_room(
+		Rect2i(18, 11, 14, 11),
+		&"hall",
+		[
+			Vector2i(24, 11), Vector2i(25, 11),
+			Vector2i(18, 15), Vector2i(18, 16),
+			Vector2i(31, 15), Vector2i(31, 16),
+			Vector2i(24, 21), Vector2i(25, 21),
+		],
+	)
+	_build_room(Rect2i(2, 11, 16, 11), &"kitchen", [Vector2i(17, 15), Vector2i(17, 16)])
+	_build_room(Rect2i(32, 11, 16, 11), &"wood", [Vector2i(32, 15), Vector2i(32, 16)])
+	_build_room(Rect2i(14, 22, 22, 14), &"living", [Vector2i(24, 22), Vector2i(25, 22)])
+
+
+func _build_room(rect: Rect2i, floor_type: StringName, openings: Array) -> void:
+	for y in range(rect.position.y + 1, rect.end.y - 1):
+		for x in range(rect.position.x + 1, rect.end.x - 1):
+			_set_floor(Vector2i(x, y), floor_type)
+	for x in range(rect.position.x, rect.end.x):
+		_set_boundary_cell(Vector2i(x, rect.position.y), floor_type, openings, Vector2i(posmod(x + rect.position.y, 4), 1))
+		_set_boundary_cell(Vector2i(x, rect.end.y - 1), floor_type, openings, Vector2i(posmod(x + rect.end.y - 1, 4), 1))
+	for y in range(rect.position.y + 1, rect.end.y - 1):
+		_set_boundary_cell(Vector2i(rect.position.x, y), floor_type, openings, Vector2i(6, 1))
+		_set_boundary_cell(Vector2i(rect.end.x - 1, y), floor_type, openings, Vector2i(7, 1))
+
+
+func _set_boundary_cell(cell: Vector2i, floor_type: StringName, openings: Array, wall_atlas: Vector2i) -> void:
+	if cell in openings:
+		_set_floor(cell, floor_type)
+		return
+	_set_wall(cell, wall_atlas)
+
+
+func _set_floor(cell: Vector2i, floor_type: StringName) -> void:
+	var atlas := Vector2i(posmod(cell.x + cell.y, 4), 0)
+	if floor_type == &"kitchen":
+		atlas.x += 4
+	tiles.set_cell(cell, _atlas_source_id, atlas)
+	_walkable_cells[cell] = true
+	_wall_cells.erase(cell)
+
+
+func _set_wall(cell: Vector2i, atlas: Vector2i) -> void:
+	tiles.set_cell(cell, _atlas_source_id, atlas)
+	_wall_cells[cell] = true
+	_walkable_cells.erase(cell)
 
 
 func _build_props() -> void:
+	# Bedroom: the first playable teaching composition.
 	_add_prop(props_back, "bedroom_rug", Rect2(576, 128, 128, 64), Vector2(800, 230), -1)
 	_add_prop(props_back, "bed", Rect2(0, 0, 96, 64), Vector2(704, 160), 0)
 	_add_prop(props_back, "bedside_table", Rect2(192, 0, 32, 32), Vector2(768, 176), 1)
 	_add_prop(props_back, "wardrobe", Rect2(224, 0, 64, 64), Vector2(896, 144), 0)
 	_add_prop(props_back, "bedroom_window", Rect2(736, 128, 96, 64), Vector2(816, 112), 0)
 	_add_prop(props_front, "bedroom_lamp", Rect2(704, 128, 32, 32), Vector2(768, 148), 2)
-	_add_prop(props_front, "door_bedroom", Rect2(0, 64, 64, 64), Vector2(800, 336), 3, ENVIRONMENT_ATLAS)
+	_add_prop(props_front, "doorway_bedroom", Rect2(192, 64, 64, 64), Vector2(800, 336), 3, ENVIRONMENT_ATLAS)
+
+	# Hallway: balanced directional anchors and the sealed exit.
+	_add_prop(props_back, "exit_door", Rect2(512, 128, 64, 96), Vector2(992, 400), 0)
+	_add_prop(props_back, "light_hall_north", Rect2(448, 128, 32, 32), Vector2(800, 416), 1)
+	_add_prop(props_back, "light_hall_south", Rect2(448, 128, 32, 32), Vector2(800, 624), 1)
+	_add_prop(props_front, "doorway_kitchen", Rect2(192, 64, 64, 64), Vector2(576, 512), 2, ENVIRONMENT_ATLAS)
+	_add_prop(props_front, "doorway_child", Rect2(192, 64, 64, 64), Vector2(1024, 512), 2, ENVIRONMENT_ATLAS)
+	_add_prop(props_front, "doorway_living", Rect2(192, 64, 64, 64), Vector2(800, 704), 2, ENVIRONMENT_ATLAS)
+
+	# Kitchen: stain, glass and receipt remain distinct visual targets.
+	_add_prop(props_back, "kitchen_counter", Rect2(352, 0, 192, 64), Vector2(320, 416), 0)
+	_add_prop(props_back, "kitchen_stain", Rect2(608, 0, 64, 32), Vector2(288, 592), -1)
+	_add_prop(props_back, "kitchen_glass", Rect2(544, 0, 32, 32), Vector2(400, 480), 1)
+	_add_prop(props_back, "kitchen_receipt", Rect2(672, 0, 32, 32), Vector2(240, 608), 1)
+	_add_prop(props_back, "light_kitchen", Rect2(448, 128, 32, 32), Vector2(448, 448), 1)
+
+	# Child's room: the drawing is visible from a generous bed-side approach.
+	_add_prop(props_back, "child_bed", Rect2(0, 64, 96, 64), Vector2(1120, 480), 0)
+	_add_prop(props_back, "height_marks", Rect2(192, 64, 32, 64), Vector2(1472, 448), 0)
+	_add_prop(props_back, "music_box", Rect2(224, 64, 32, 32), Vector2(1344, 480), 1)
+	_add_prop(props_back, "child_drawing", Rect2(256, 64, 32, 32), Vector2(1376, 608), 1)
+	_add_prop(props_back, "light_child", Rect2(448, 128, 32, 32), Vector2(1216, 448), 1)
+
+	# Living room: family layout first, clock left, photograph right.
+	_add_prop(props_back, "living_rug", Rect2(576, 128, 128, 64), Vector2(800, 912), -1)
+	_add_prop(props_back, "sofa", Rect2(0, 128, 96, 64), Vector2(560, 816), 0)
+	_add_prop(props_back, "family_table", Rect2(96, 128, 96, 96), Vector2(800, 896), 0)
+	_add_prop(props_back, "living_clock", Rect2(256, 128, 32, 64), Vector2(576, 800), 1)
+	_add_prop(props_back, "memory_compartment", Rect2(288, 128, 64, 64), Vector2(640, 800), 0)
+	_add_prop(props_back, "wedding_photo", Rect2(192, 128, 32, 32), Vector2(992, 928), 1)
+	_add_prop(props_back, "light_living", Rect2(448, 128, 32, 32), Vector2(896, 800), 1)
 
 	_add_interaction(&"bed", Vector2(752, 176), &"bedroom.bed.loop1")
 	_add_interaction(&"exit_door", Vector2(800, 296), &"bedroom.door.loop1")
 
 
 func _build_collisions() -> void:
-	_add_solid(Rect2(640, 64, 320, 32))
-	_add_solid(Rect2(640, 96, 32, 256))
-	_add_solid(Rect2(928, 96, 32, 256))
-	_add_solid(Rect2(640, 320, 128, 32))
-	_add_solid(Rect2(832, 320, 128, 32))
-	_add_solid(Rect2(736, 320, 32, 192))
-	_add_solid(Rect2(832, 320, 32, 192))
+	for cell: Vector2i in _wall_cells:
+		_add_solid(Rect2(Vector2(cell * TILE_SIZE), Vector2(TILE_SIZE, TILE_SIZE)))
 	_add_solid(Rect2(656, 136, 96, 52))
 	_add_solid(Rect2(864, 112, 64, 56))
+	_add_solid(Rect2(224, 384, 192, 52))
+	_add_solid(Rect2(1072, 456, 96, 48))
+	_add_solid(Rect2(512, 792, 96, 48))
+	_add_solid(Rect2(752, 856, 96, 72))
+
+
+func is_walkable_cell(cell: Vector2i) -> bool:
+	return _walkable_cells.has(cell) and not _wall_cells.has(cell)
+
+
+func is_wall_cell(cell: Vector2i) -> bool:
+	return _wall_cells.has(cell)
+
+
+func map_size() -> Vector2i:
+	return MAP_SIZE
+
+
+func room_id_for_position(world_position: Vector2) -> StringName:
+	for room_id: StringName in ROOM_RECTS:
+		if (ROOM_RECTS[room_id] as Rect2).has_point(world_position):
+			return room_id
+	return &""
+
+
+func camera_target_for_position(world_position: Vector2) -> Vector2:
+	for room_id: StringName in ROOM_RECTS:
+		var rect: Rect2 = ROOM_RECTS[room_id]
+		if not rect.has_point(world_position):
+			continue
+		var target: Vector2 = ROOM_CAMERA_CENTERS[room_id]
+		if rect.size.x > VIEWPORT_SIZE.x:
+			target.x = clampf(world_position.x, rect.position.x + VIEWPORT_SIZE.x * 0.5, rect.end.x - VIEWPORT_SIZE.x * 0.5)
+		if rect.size.y > VIEWPORT_SIZE.y:
+			target.y = clampf(world_position.y, rect.position.y + VIEWPORT_SIZE.y * 0.5, rect.end.y - VIEWPORT_SIZE.y * 0.5)
+		return target
+	return Vector2(
+		clampf(world_position.x, VIEWPORT_SIZE.x * 0.5, MAP_SIZE.x * TILE_SIZE - VIEWPORT_SIZE.x * 0.5),
+		clampf(world_position.y, VIEWPORT_SIZE.y * 0.5, MAP_SIZE.y * TILE_SIZE - VIEWPORT_SIZE.y * 0.5),
+	)
 
 
 func _add_prop(parent: Node2D, id: String, region: Rect2, position_value: Vector2, z: int, atlas: Texture2D = PROPS_ATLAS) -> void:
@@ -153,9 +282,29 @@ func _capture_path_from_args() -> String:
 	return ""
 
 
+func _capture_room_from_args() -> StringName:
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--capture-room="):
+			return StringName(argument.trim_prefix("--capture-room="))
+	return &"bedroom"
+
+
+func _place_player_for_capture(room_id: StringName) -> void:
+	var positions := {
+		&"bedroom": Vector2(796, 184),
+		&"hallway": Vector2(800, 528),
+		&"kitchen": Vector2(336, 544),
+		&"child_room": Vector2(1312, 544),
+		&"living_room": Vector2(800, 800),
+	}
+	player.global_position = positions.get(room_id, positions[&"bedroom"])
+	player.set_facing(Vector2.LEFT if room_id == &"bedroom" else Vector2.DOWN)
+
+
 func _capture_runtime(path: String) -> void:
 	for frame in 6:
 		await get_tree().process_frame
+	print("CAPTURE_METRICS viewport=%s window=%s camera=%s" % [get_viewport().get_visible_rect().size, get_window().size, room_camera.position])
 	var image := get_viewport().get_texture().get_image()
 	if image.get_size() != Vector2i(640, 360):
 		image.resize(640, 360, Image.INTERPOLATE_NEAREST)

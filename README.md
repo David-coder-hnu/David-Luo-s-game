@@ -90,13 +90,28 @@ flowchart LR
 
 > 主视觉是概念目标，不是游戏实机截图。游戏内资产按同一色板制作，并以 Godot 运行证据逐项验收。
 
-### First playable frame
+### First-loop runtime tour
 
 <p align="center">
   <img src="docs/evidence/runtime/bedroom_first_playable.png" width="640" alt="Godot 4.6.3 实机运行的第一轮卧室：可操控秦峥面对调查提示">
 </p>
 
-> Godot 4.6.3 在 Mac 开发环境实际运行，使用 `TileMapLayer`、角色碰撞和近距离调查系统；这是第一轮卧室开发证据，不冒充五房间或最终发布画面。
+> Godot 4.6.3 在 Mac 开发环境实际运行，使用连通的 `TileMapLayer`、角色碰撞、房间相机和近距离调查系统；所有图片保持 640×360 原生逻辑画布，不冒充最终发布画面。
+
+<details>
+<summary><strong>查看其余四个房间的真实运行画面</strong></summary>
+<br>
+
+| 走廊 | 厨房 |
+|---|---|
+| <img src="docs/evidence/runtime/first_loop_hallway.png" width="320" alt="第一轮走廊 Godot 实机截图"> | <img src="docs/evidence/runtime/first_loop_kitchen.png" width="320" alt="第一轮厨房 Godot 实机截图"> |
+
+| 儿童房 | 客厅 |
+|---|---|
+| <img src="docs/evidence/runtime/first_loop_child_room.png" width="320" alt="第一轮儿童房 Godot 实机截图"> | <img src="docs/evidence/runtime/first_loop_living_room.png" width="320" alt="第一轮客厅 Godot 实机截图"> |
+
+截图复现方式、引擎与渲染信息见 [`docs/evidence/`](docs/evidence/README.md)。
+</details>
 
 <details>
 <summary><strong>查看垂直切片图像资产 V2（REVIEW）</strong></summary>
@@ -113,7 +128,7 @@ flowchart LR
 | <img src="assets/game/closeups/child_drawing_loop1.png" width="320" alt="第一轮儿童画"> | <img src="assets/game/closeups/child_drawing_loop2.png" width="320" alt="第二轮儿童画"> |
 | <img src="assets/game/closeups/wedding_photo_loop1.png" width="320" alt="第一轮婚纱照"> | <img src="assets/game/closeups/wedding_photo_loop2.png" width="320" alt="第二轮婚纱照"> |
 
-环境瓦片、83 个稳定图集区域、角色帧、UI、FX、640×360构图标杆与全部可编辑源文件见 [`assets/game/`](assets/game/README.md)。运行时资产当前仍为 `REVIEW`；首张卧室证据不能替代其余房间、第二轮和惩罚态评审。
+环境瓦片、83 个稳定图集区域、角色帧、UI、FX、640×360构图标杆与全部可编辑源文件见 [`assets/game/`](assets/game/README.md)。第一轮五房间已提供实机证据；运行时资产仍为 `REVIEW`，第二轮、惩罚态和角色动画尚未完成评审。
 </details>
 
 <details>
