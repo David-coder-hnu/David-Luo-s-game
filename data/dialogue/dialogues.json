@@ -2,47 +2,60 @@
   "dialogues": {
     "bedroom.bed.loop1": {
       "pages": [
-        {
-          "text_key": "bedroom.bed.loop1.01",
-          "speaker": "qin_zheng",
-          "presentation": "box",
-          "min_display_ms": 250,
-          "skippable": true,
-          "cue_before": "",
-          "cue_after": ""
-        },
-        {
-          "text_key": "bedroom.bed.loop1.02",
-          "speaker": "qin_zheng",
-          "presentation": "box",
-          "min_display_ms": 250,
-          "skippable": true,
-          "cue_before": "",
-          "cue_after": ""
-        }
+        {"text_key":"bedroom.bed.loop1.01","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"bedroom.bed.loop1.02","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}
       ]
     },
     "bedroom.door.loop1": {
       "pages": [
-        {
-          "text_key": "bedroom.door.loop1.01",
-          "speaker": "qin_zheng",
-          "presentation": "box",
-          "min_display_ms": 250,
-          "skippable": true,
-          "cue_before": "",
-          "cue_after": ""
-        },
-        {
-          "text_key": "bedroom.door.loop1.02",
-          "speaker": "qin_zheng",
-          "presentation": "box",
-          "min_display_ms": 250,
-          "skippable": true,
-          "cue_before": "",
-          "cue_after": ""
-        }
+        {"text_key":"bedroom.door.loop1.01","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"bedroom.door.loop1.02","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}
       ]
-    }
+    },
+    "fragment.kitchen.first": {
+      "pages": [
+        {"text_key":"fragment.kitchen.first.01","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.kitchen.first.02","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.kitchen.first.03","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.kitchen.first.04","speaker":"su_lan","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":"memory.kitchen"},
+        {"text_key":"fragment.kitchen.first.05","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.kitchen.first.06","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}
+      ]
+    },
+    "fragment.kitchen.repeat_loop1": {"pages":[{"text_key":"fragment.kitchen.repeat_loop1.01","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}]},
+    "fragment.kitchen.repeat_loop2": {"pages":[
+      {"text_key":"fragment.kitchen.repeat_loop2.01","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+      {"text_key":"fragment.kitchen.repeat_loop2.02","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}
+    ]},
+    "fragment.child.first": {
+      "pages": [
+        {"text_key":"fragment.child.first.01","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.child.first.02","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.child.first.03","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.child.first.04","speaker":"child","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":"memory.child"},
+        {"text_key":"fragment.child.first.05","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.child.first.06","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}
+      ]
+    },
+    "fragment.child.repeat_loop1": {"pages":[{"text_key":"fragment.child.repeat_loop1.01","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}]},
+    "fragment.child.repeat_loop2": {"pages":[
+      {"text_key":"fragment.child.repeat_loop2.01","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+      {"text_key":"fragment.child.repeat_loop2.02","speaker":"child","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}
+    ]},
+    "fragment.wedding.first": {
+      "pages": [
+        {"text_key":"fragment.wedding.first.01","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.wedding.first.02","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.wedding.first.03","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.wedding.first.04","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":"memory.wedding"},
+        {"text_key":"fragment.wedding.first.05","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+        {"text_key":"fragment.wedding.first.06","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}
+      ]
+    },
+    "fragment.wedding.repeat_loop1": {"pages":[{"text_key":"fragment.wedding.repeat_loop1.01","speaker":"qin_zheng","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}]},
+    "fragment.wedding.repeat_loop2": {"pages":[
+      {"text_key":"fragment.wedding.repeat_loop2.01","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""},
+      {"text_key":"fragment.wedding.repeat_loop2.02","speaker":"narration","presentation":"box","min_display_ms":250,"skippable":true,"cue_before":"","cue_after":""}
+    ]}
   }
 }

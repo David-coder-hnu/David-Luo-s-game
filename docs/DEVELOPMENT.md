@@ -35,6 +35,7 @@ GODOT="$HOME/Applications/Godot-4.6.3-stable.app/Contents/MacOS/Godot"
 "$GODOT" --headless --path . --script tests/smoke/playable_bedroom_smoke.gd
 "$GODOT" --headless --path . --script tests/smoke/house_layout_smoke.gd
 "$GODOT" --headless --path . --script tests/smoke/interaction_room_smoke.gd
+"$GODOT" --headless --path . --script tests/smoke/fragment_flow_smoke.gd
 ```
 
 测试分别覆盖项目契约、设置损坏恢复与重载、六种碎片顺序和状态不变量、中文两页文本的快进/输入保护，以及卧室移动—调查—文本—恢复控制闭环。

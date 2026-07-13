@@ -3,6 +3,7 @@ extends Node2D
 const ENVIRONMENT_ATLAS := preload("res://assets/game/atlases/environment_tiles.png")
 const PROPS_ATLAS := preload("res://assets/game/atlases/props_atlas.png")
 const INTERACTABLE_SCRIPT := preload("res://scripts/world/interactable.gd")
+const FRAGMENT_DATA_PATH := "res://data/fragments/fragments.json"
 
 const TILE_SIZE := 32
 const MAP_SIZE := Vector2i(50, 38)
@@ -35,6 +36,8 @@ var _active_interactable: Interactable
 var _wall_cells: Dictionary = {}
 var _walkable_cells: Dictionary = {}
 var _current_room_id: StringName = &"bedroom"
+var _fragment_definitions: Dictionary = {}
+var _pending_fragment_id: StringName = &""
 
 
 func _ready() -> void:
@@ -42,6 +45,8 @@ func _ready() -> void:
 		GameState.start_new_game()
 	_build_tile_map()
 	_build_props()
+	_load_fragment_definitions()
+	_build_fragment_interactions()
 	_build_collisions()
 	player.interaction_changed.connect(_on_interaction_changed)
 	hud.dialogue_closed.connect(_on_dialogue_closed)
@@ -156,16 +161,44 @@ func _build_props() -> void:
 	_add_prop(props_back, "light_child", Rect2(448, 128, 32, 32), Vector2(1216, 448), 1)
 
 	# Living room: family layout first, clock left, photograph right.
-	_add_prop(props_back, "living_rug", Rect2(576, 128, 128, 64), Vector2(800, 912), -1)
 	_add_prop(props_back, "sofa", Rect2(0, 128, 96, 64), Vector2(560, 816), 0)
 	_add_prop(props_back, "family_table", Rect2(96, 128, 96, 96), Vector2(800, 896), 0)
 	_add_prop(props_back, "living_clock", Rect2(256, 128, 32, 64), Vector2(576, 800), 1)
 	_add_prop(props_back, "memory_compartment", Rect2(288, 128, 64, 64), Vector2(640, 800), 0)
-	_add_prop(props_back, "wedding_photo", Rect2(192, 128, 32, 32), Vector2(992, 928), 1)
+	_add_prop(props_back, "wedding_photo", Rect2(192, 128, 32, 32), Vector2(1008, 880), 1)
 	_add_prop(props_back, "light_living", Rect2(448, 128, 32, 32), Vector2(896, 800), 1)
 
 	_add_interaction(&"bed", Vector2(752, 176), &"bedroom.bed.loop1")
 	_add_interaction(&"exit_door", Vector2(800, 296), &"bedroom.door.loop1")
+
+
+func _load_fragment_definitions() -> void:
+	var file := FileAccess.open(FRAGMENT_DATA_PATH, FileAccess.READ)
+	if file == null:
+		push_error("Unable to open fragment definitions: %s" % FRAGMENT_DATA_PATH)
+		return
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
+	if not parsed is Dictionary or not parsed.has("fragments") or not parsed["fragments"] is Array:
+		push_error("Fragment definitions must contain a fragments array")
+		return
+	for definition: Dictionary in parsed["fragments"]:
+		var fragment_id := StringName(definition.get("id", ""))
+		if fragment_id in GameState.FRAGMENT_IDS:
+			_fragment_definitions[fragment_id] = definition
+
+
+func _build_fragment_interactions() -> void:
+	var positions := {
+		&"kitchen_receipt": Vector2(240, 608),
+		&"child_drawing": Vector2(1376, 608),
+		&"wedding_photo": Vector2(1008, 880),
+	}
+	for fragment_id: StringName in positions:
+		var definition: Dictionary = _fragment_definitions.get(fragment_id, {})
+		if definition.is_empty():
+			push_error("Missing fragment definition: %s" % fragment_id)
+			continue
+		_add_fragment_interaction(definition, positions[fragment_id])
 
 
 func _build_collisions() -> void:
@@ -221,6 +254,7 @@ func _add_prop(parent: Node2D, id: String, region: Rect2, position_value: Vector
 	var texture := AtlasTexture.new()
 	texture.atlas = atlas
 	texture.region = region
+	texture.filter_clip = true
 	sprite.texture = texture
 	sprite.position = position_value
 	sprite.z_index = z
@@ -232,6 +266,31 @@ func _add_interaction(id: StringName, position_value: Vector2, dialogue_key: Str
 	area.name = String(id)
 	area.interaction_id = id
 	area.dialogue_key = dialogue_key
+	area.position = position_value
+	area.add_to_group(&"interactable")
+	var shape_node := CollisionShape2D.new()
+	var shape := CircleShape2D.new()
+	shape.radius = 8.0
+	shape_node.shape = shape
+	area.add_child(shape_node)
+	area.activated.connect(_on_interaction_activated.bind(area))
+	add_child(area)
+
+
+func _add_fragment_interaction(definition: Dictionary, position_value: Vector2) -> void:
+	var first_dialogues: Array = definition.get("dialogue_first", [])
+	var repeat_loop_1: Array = definition.get("dialogue_repeat_loop_1", [])
+	var repeat_loop_2: Array = definition.get("dialogue_repeat_loop_2", [])
+	if first_dialogues.is_empty() or repeat_loop_1.is_empty() or repeat_loop_2.is_empty():
+		push_error("Fragment dialogue sets are incomplete: %s" % definition.get("id", ""))
+		return
+	var area := INTERACTABLE_SCRIPT.new() as Interactable
+	area.name = String(definition["interaction_id"])
+	area.interaction_id = StringName(definition["interaction_id"])
+	area.fragment_id = StringName(definition["id"])
+	area.dialogue_first = StringName(first_dialogues[0])
+	area.dialogue_repeat_loop_1 = StringName(repeat_loop_1[0])
+	area.dialogue_repeat_loop_2 = StringName(repeat_loop_2[0])
 	area.position = position_value
 	area.add_to_group(&"interactable")
 	var shape_node := CollisionShape2D.new()
@@ -262,14 +321,21 @@ func _on_interaction_changed(prompt_key: StringName) -> void:
 
 func _on_interaction_activated(_dialogue_key: StringName, interactable: Interactable) -> void:
 	_active_interactable = interactable
+	_pending_fragment_id = &""
+	if not interactable.fragment_id.is_empty() and interactable.fragment_id not in GameState.snapshot_for_debug()["completed_fragments_sorted"]:
+		_pending_fragment_id = interactable.fragment_id
 	player.set_control_enabled(false)
 	if not hud.show_dialogue(interactable.dialogue_key):
+		_pending_fragment_id = &""
 		interactable.release()
 		_active_interactable = null
 		player.set_control_enabled(true)
 
 
 func _on_dialogue_closed() -> void:
+	if not _pending_fragment_id.is_empty():
+		GameState.complete_fragment(_pending_fragment_id)
+	_pending_fragment_id = &""
 	if _active_interactable != null:
 		_active_interactable.release()
 	_active_interactable = null

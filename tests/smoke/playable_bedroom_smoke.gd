@@ -25,7 +25,11 @@ func _run() -> void:
 	if player.collision_layer != 2 or player.collision_mask != 1:
 		_fail("player collision layers do not match the contract")
 		return
-	if get_nodes_in_group(&"interactable").size() != 2:
+	var teaching_ids: Array[StringName] = []
+	for interaction: Node in get_nodes_in_group(&"interactable"):
+		if StringName(interaction.get("fragment_id")).is_empty():
+			teaching_ids.append(StringName(interaction.get("interaction_id")))
+	if teaching_ids.size() != 2 or &"bed" not in teaching_ids or &"exit_door" not in teaching_ids:
 		_fail("bedroom must expose the two approved teaching interactions")
 		return
 	var text_catalog := root.get_node_or_null("TextCatalog")

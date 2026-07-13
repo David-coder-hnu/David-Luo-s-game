@@ -1,0 +1,34 @@
+{
+  "fragments": [
+    {
+      "id": "kitchen_receipt",
+      "room_id": "kitchen",
+      "interaction_id": "kitchen_receipt",
+      "dialogue_first": ["fragment.kitchen.first"],
+      "dialogue_repeat_loop_1": ["fragment.kitchen.repeat_loop1"],
+      "dialogue_repeat_loop_2": ["fragment.kitchen.repeat_loop2"],
+      "memory_cue_id": "memory.kitchen",
+      "completion_audio_id": ""
+    },
+    {
+      "id": "child_drawing",
+      "room_id": "child_room",
+      "interaction_id": "child_drawing",
+      "dialogue_first": ["fragment.child.first"],
+      "dialogue_repeat_loop_1": ["fragment.child.repeat_loop1"],
+      "dialogue_repeat_loop_2": ["fragment.child.repeat_loop2"],
+      "memory_cue_id": "memory.child",
+      "completion_audio_id": ""
+    },
+    {
+      "id": "wedding_photo",
+      "room_id": "living_room",
+      "interaction_id": "wedding_photo",
+      "dialogue_first": ["fragment.wedding.first"],
+      "dialogue_repeat_loop_1": ["fragment.wedding.repeat_loop1"],
+      "dialogue_repeat_loop_2": ["fragment.wedding.repeat_loop2"],
+      "memory_cue_id": "memory.wedding",
+      "completion_audio_id": ""
+    }
+  ]
+}

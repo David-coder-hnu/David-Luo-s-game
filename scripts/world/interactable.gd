@@ -8,6 +8,10 @@ var prompt_key: StringName = &"ui.action.inspect"
 var dialogue_key: StringName
 var busy := false
 var enabled := true
+var fragment_id: StringName = &""
+var dialogue_first: StringName = &""
+var dialogue_repeat_loop_1: StringName = &""
+var dialogue_repeat_loop_2: StringName = &""
 
 
 func get_interaction_id() -> StringName:
@@ -37,9 +41,21 @@ func interact(context: Dictionary = {}) -> void:
 	var snapshot: Dictionary = context.get("game_snapshot", {})
 	if not can_interact(snapshot):
 		return
+	dialogue_key = _resolve_dialogue_key(snapshot)
+	if dialogue_key.is_empty():
+		return
 	busy = true
 	activated.emit(dialogue_key)
 
 
 func release() -> void:
 	busy = false
+
+
+func _resolve_dialogue_key(game_snapshot: Dictionary) -> StringName:
+	if fragment_id.is_empty():
+		return dialogue_key
+	var completed: Array = game_snapshot.get("completed_fragments_sorted", [])
+	if fragment_id not in completed:
+		return dialogue_first
+	return dialogue_repeat_loop_2 if game_snapshot.get("phase", &"") == &"loop_2" else dialogue_repeat_loop_1
