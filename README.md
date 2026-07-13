@@ -114,6 +114,14 @@ flowchart LR
 截图复现方式、引擎与渲染信息见 [`docs/evidence/`](docs/evidence/README.md)。
 </details>
 
+### The house remembers
+
+| 第一轮：留下的污迹与单杯 | 第二轮：污迹消失，杯子成对 |
+|---|---|
+| <img src="docs/evidence/runtime/v3_first_loop_kitchen.png" width="320" alt="V3 第一轮厨房：地面留有水渍，餐桌上只有一只杯子"> | <img src="docs/evidence/runtime/v3_loop2_kitchen.png" width="320" alt="V3 第二轮厨房：水渍消失，餐桌上出现两只杯子"> |
+
+> 两张图来自同一 Godot 场景的合法状态链，不是概念图拼接。房屋不靠随机换皮制造恐怖，而是让同一件日常物品在第二轮改变证词。
+
 <details>
 <summary><strong>查看垂直切片图像资产 V2（REVIEW）</strong></summary>
 <br>

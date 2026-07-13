@@ -38,3 +38,20 @@ GODOT="$HOME/Applications/Godot-4.6.3-stable.app/Contents/MacOS/Godot"
 - `runtime/v3_first_loop_living_room.png`
 
 这组截图使用与上方相同的引擎、渲染器和 640×360 输出流程。玩家可见环境已替换为生成式 V3 运行时背景，秦峥使用 V3 四方向精灵；V2 TileMap 与道具图集仅作为隐藏的碰撞、房间坐标和开发回退层。儿童房截图使用左侧门洞校正版，并把交互点对齐床下纸角。状态为 `REVIEW`，尚不代表第二轮覆盖层、惩罚态或移动碰撞观感已经批准。
+
+## V3 厨房两轮对照
+
+- 第一轮：`runtime/v3_first_loop_kitchen.png`
+- 第二轮：`runtime/v3_loop2_kitchen.png`
+
+第二轮截图通过合法状态链 `loop_1 → punishment_1 → loop_2` 进入，不是手工替换截图。运行时根据 `GameState.cycle_index` 自动选择房间纹理；未拥有第二轮变体的房间安全回退到第一轮背景。厨房第二轮固定变化为地面水渍消失、单杯变成两只干净杯子，HUD 同步显示“第二轮”。
+
+复现第二轮厨房：
+
+```sh
+GODOT="$HOME/Applications/Godot-4.6.3-stable.app/Contents/MacOS/Godot"
+"$GODOT" --path . --resolution 1280x720 -- \
+  --capture-room=kitchen \
+  --capture-phase=loop_2 \
+  --capture-screenshot=res://docs/evidence/runtime/v3_loop2_kitchen.png
+```

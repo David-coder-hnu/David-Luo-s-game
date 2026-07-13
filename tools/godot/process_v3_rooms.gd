@@ -23,6 +23,12 @@ const ROOMS := {
 		"flip_x": false,
 	},
 }
+const LOOP_2_ROOMS := {
+	"kitchen": {
+		"source": "res://assets/game/generated_v3/rooms/kitchen_loop2_background.png",
+		"flip_x": false,
+	},
+}
 const OUTPUT_DIRECTORY := "res://assets/game/generated_v3/runtime/rooms"
 
 
@@ -35,23 +41,31 @@ func _initialize() -> void:
 		return
 
 	for room_id: String in ROOMS:
-		var definition: Dictionary = ROOMS[room_id]
-		var source_path: String = definition["source"]
-		var image := Image.new()
-		var load_error := image.load(ProjectSettings.globalize_path(source_path))
-		if load_error != OK:
-			push_error("Unable to load %s: %s" % [source_path, error_string(load_error)])
+		if _process_variant(room_id, "loop1", ROOMS[room_id]) != OK:
 			quit(1)
 			return
-		if definition["flip_x"]:
-			image.flip_x()
-		image.resize(OUTPUT_SIZE.x, OUTPUT_SIZE.y, Image.INTERPOLATE_NEAREST)
-		var output_path := "%s/%s_loop1.png" % [OUTPUT_DIRECTORY, room_id]
-		var save_error := image.save_png(ProjectSettings.globalize_path(output_path))
-		if save_error != OK:
-			push_error("Unable to save %s: %s" % [output_path, error_string(save_error)])
+	for room_id: String in LOOP_2_ROOMS:
+		if _process_variant(room_id, "loop2", LOOP_2_ROOMS[room_id]) != OK:
 			quit(1)
 			return
-		print("V3_ROOM_RUNTIME_OK %s 640x360 flip_x=%s" % [room_id, definition["flip_x"]])
 
 	quit()
+
+
+func _process_variant(room_id: String, cycle_name: String, definition: Dictionary) -> Error:
+	var source_path: String = definition["source"]
+	var image := Image.new()
+	var load_error := image.load(ProjectSettings.globalize_path(source_path))
+	if load_error != OK:
+		push_error("Unable to load %s: %s" % [source_path, error_string(load_error)])
+		return load_error
+	if definition["flip_x"]:
+		image.flip_x()
+	image.resize(OUTPUT_SIZE.x, OUTPUT_SIZE.y, Image.INTERPOLATE_NEAREST)
+	var output_path := "%s/%s_%s.png" % [OUTPUT_DIRECTORY, room_id, cycle_name]
+	var save_error := image.save_png(ProjectSettings.globalize_path(output_path))
+	if save_error != OK:
+		push_error("Unable to save %s: %s" % [output_path, error_string(save_error)])
+		return save_error
+	print("V3_ROOM_RUNTIME_OK %s %s 640x360 flip_x=%s" % [room_id, cycle_name, definition["flip_x"]])
+	return OK

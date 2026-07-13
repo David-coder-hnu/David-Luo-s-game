@@ -14,7 +14,8 @@ var _room_id: StringName = &"bedroom"
 
 func _ready() -> void:
 	_apply_styles()
-	room_tag.text = TextCatalog.get_text(&"ui.phase.loop1_bedroom")
+	_refresh_room_tag()
+	GameState.phase_changed.connect(_on_phase_changed)
 	DialogueController.page_presented.connect(_on_page_presented)
 	DialogueController.dialogue_finished.connect(_on_dialogue_finished)
 
@@ -23,7 +24,16 @@ func set_room(room_id: StringName) -> void:
 	if room_id.is_empty() or room_id == _room_id:
 		return
 	_room_id = room_id
-	room_tag.text = TextCatalog.get_text(StringName("ui.phase.loop1_%s" % room_id))
+	_refresh_room_tag()
+
+
+func _refresh_room_tag() -> void:
+	var cycle := "loop2" if GameState.snapshot_for_debug()["cycle_index"] == 1 else "loop1"
+	room_tag.text = TextCatalog.get_text(StringName("ui.phase.%s_%s" % [cycle, _room_id]))
+
+
+func _on_phase_changed(_from: StringName, _to: StringName) -> void:
+	_refresh_room_tag()
 
 
 func set_prompt(text_key: StringName) -> void:

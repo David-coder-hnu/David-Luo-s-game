@@ -20,6 +20,7 @@
 | `assets/game/closeups/*.png` | 叙事特写运行时图像 | 由上述母版经确定性处理生成 | 同母版 | 320×180、最近邻、有限色、无抖动；处理脚本可复现 | 2026-07-13 |
 | `assets/game/generated_v3/**` | V3 房间母版、640×360 运行时背景与角色资产 | David Luo 项目指导；OpenAI 内置图像生成工具生成；确定性脚本处理 | 由项目所有者按 MIT 分发；同时受生成服务适用条款约束 | 提示摘要、SHA-256、去背与处理流程见 `assets/game/generated_v3/GENERATION_RECORD.md`；第一轮五房间背景与秦峥已接入 Godot，状态为 REVIEW | 2026-07-13 |
 | `docs/evidence/runtime/v3_first_loop_*.png` | V3 第一轮五房间 Godot 实机证据 | 项目原创生成式 V3 资产；Godot 4.6.3 macOS Compatibility 渲染 | 同 V3 运行时资产 | 640×360；包含 V3 房间、V3 秦峥、隐藏碰撞层、房间相机与 HUD；不代表第二轮或惩罚态已完成 | 2026-07-13 |
+| `docs/evidence/runtime/v3_loop2_kitchen.png` | V3 第二轮厨房 Godot 实机证据 | 项目原创生成式 V3 资产；Godot 4.6.3 macOS Compatibility 渲染 | 同 V3 运行时资产 | 640×360；真实状态切换后的无水渍、双杯厨房与第二轮 HUD | 2026-07-13 |
 
 ## 合入规则
 

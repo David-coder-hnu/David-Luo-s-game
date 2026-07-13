@@ -3,11 +3,14 @@ extends Node2D
 const ENVIRONMENT_ATLAS := preload("res://assets/game/atlases/environment_tiles.png")
 const PROPS_ATLAS := preload("res://assets/game/atlases/props_atlas.png")
 const V3_ROOM_TEXTURES := {
-	&"bedroom": preload("res://assets/game/generated_v3/runtime/rooms/bedroom_loop1.png"),
-	&"hallway": preload("res://assets/game/generated_v3/runtime/rooms/hallway_loop1.png"),
-	&"kitchen": preload("res://assets/game/generated_v3/runtime/rooms/kitchen_loop1.png"),
-	&"child_room": preload("res://assets/game/generated_v3/runtime/rooms/child_room_loop1.png"),
-	&"living_room": preload("res://assets/game/generated_v3/runtime/rooms/living_room_loop1.png"),
+	&"bedroom": {0: preload("res://assets/game/generated_v3/runtime/rooms/bedroom_loop1.png")},
+	&"hallway": {0: preload("res://assets/game/generated_v3/runtime/rooms/hallway_loop1.png")},
+	&"kitchen": {
+		0: preload("res://assets/game/generated_v3/runtime/rooms/kitchen_loop1.png"),
+		1: preload("res://assets/game/generated_v3/runtime/rooms/kitchen_loop2.png"),
+	},
+	&"child_room": {0: preload("res://assets/game/generated_v3/runtime/rooms/child_room_loop1.png")},
+	&"living_room": {0: preload("res://assets/game/generated_v3/runtime/rooms/living_room_loop1.png")},
 }
 const INTERACTABLE_SCRIPT := preload("res://scripts/world/interactable.gd")
 const FRAGMENT_DATA_PATH := "res://data/fragments/fragments.json"
@@ -58,11 +61,13 @@ func _ready() -> void:
 	_load_fragment_definitions()
 	_build_fragment_interactions()
 	_build_collisions()
+	GameState.phase_changed.connect(_on_phase_changed)
 	player.interaction_changed.connect(_on_interaction_changed)
 	hud.dialogue_closed.connect(_on_dialogue_closed)
 	print("HELL_CYCLE_PLAYABLE_OK")
 	var capture_path := _capture_path_from_args()
 	if not capture_path.is_empty():
+		_prepare_capture_phase(_capture_phase_from_args())
 		_place_player_for_capture(_capture_room_from_args())
 		_capture_runtime.call_deferred(capture_path)
 
@@ -109,7 +114,7 @@ func _build_v3_backgrounds() -> void:
 	for room_id: StringName in V3_ROOM_TEXTURES:
 		var sprite := Sprite2D.new()
 		sprite.name = "%sV3" % String(room_id).to_pascal_case()
-		sprite.texture = V3_ROOM_TEXTURES[room_id]
+		sprite.texture = _v3_texture_for_room(room_id)
 		sprite.position = ROOM_CAMERA_CENTERS[room_id]
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		sprite.visible = room_id == _current_room_id
@@ -120,6 +125,21 @@ func _build_v3_backgrounds() -> void:
 func _set_active_v3_background(room_id: StringName) -> void:
 	for candidate_id: StringName in _room_background_sprites:
 		(_room_background_sprites[candidate_id] as Sprite2D).visible = candidate_id == room_id
+
+
+func _v3_texture_for_room(room_id: StringName) -> Texture2D:
+	var variants: Dictionary = V3_ROOM_TEXTURES[room_id]
+	var cycle_index: int = GameState.snapshot_for_debug()["cycle_index"]
+	return variants.get(cycle_index, variants[0]) as Texture2D
+
+
+func _refresh_v3_background_textures() -> void:
+	for room_id: StringName in _room_background_sprites:
+		(_room_background_sprites[room_id] as Sprite2D).texture = _v3_texture_for_room(room_id)
+
+
+func _on_phase_changed(_from: StringName, _to: StringName) -> void:
+	_refresh_v3_background_textures()
 
 
 func _build_room(rect: Rect2i, floor_type: StringName, openings: Array) -> void:
@@ -382,6 +402,22 @@ func _capture_room_from_args() -> StringName:
 		if argument.begins_with("--capture-room="):
 			return StringName(argument.trim_prefix("--capture-room="))
 	return &"bedroom"
+
+
+func _capture_phase_from_args() -> StringName:
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--capture-phase="):
+			return StringName(argument.trim_prefix("--capture-phase="))
+	return &"loop_1"
+
+
+func _prepare_capture_phase(phase: StringName) -> void:
+	if phase != GameState.PHASE_LOOP_2:
+		return
+	for fragment_id: StringName in GameState.FRAGMENT_IDS:
+		GameState.complete_fragment(fragment_id)
+	GameState.request_phase(GameState.PHASE_PUNISHMENT_1)
+	GameState.request_phase(GameState.PHASE_LOOP_2)
 
 
 func _place_player_for_capture(room_id: StringName) -> void:
