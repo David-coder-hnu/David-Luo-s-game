@@ -12,7 +12,7 @@
   </defs>
   <rect width="1000" height="760" rx="18" fill="#0B0C14"/>
   <rect x="50" y="40" width="900" height="684" fill="url(#grid)"/>
-  <text x="50" y="28" fill="#69656A" font-family="Arial, sans-serif" font-size="14" letter-spacing="3">50 × 38 TILE BLOCKOUT · 16 PX GRID</text>
+  <text x="50" y="28" fill="#69656A" font-family="Arial, sans-serif" font-size="14" letter-spacing="3">50 × 38 TILE BLOCKOUT · 32 PX GRID</text>
 
   <g stroke="#40525A" stroke-width="3">
     <rect x="410" y="76" width="180" height="162" rx="4" fill="#242936"/>

@@ -11,13 +11,14 @@ const game = path.join(root, "assets/game");
 const regions = JSON.parse(fs.readFileSync(path.join(game, "atlas_regions.json"), "utf8"));
 
 const expected = new Map([
-  ["atlases/environment_tiles.png", [256, 128]],
-  ["atlases/props_atlas.png", [512, 256]],
-  ["characters/qin_zheng_spritesheet.png", [64, 96]],
+  ["atlases/environment_tiles.png", [512, 256]],
+  ["atlases/props_atlas.png", [1024, 512]],
+  ["characters/qin_zheng_spritesheet.png", [128, 192]],
   ["ui/ui_atlas.png", [256, 128]],
   ["ui/wordmark.png", [640, 180]],
   ["ui/title_background.png", [640, 360]],
   ["fx/fx_patterns.png", [256, 256]],
+  ["previews/bedroom_benchmark.png", [640, 360]],
   ["closeups/kitchen_receipt.png", [320, 180]],
   ["closeups/child_drawing_loop1.png", [320, 180]],
   ["closeups/child_drawing_loop2.png", [320, 180]],

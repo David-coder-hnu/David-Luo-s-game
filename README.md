@@ -68,9 +68,9 @@ flowchart LR
 - [x] 五房间精确灰盒、状态机和数据契约
 - [x] 美术、UI、音频与完整资产清单
 - [x] AI 任务图、功能验收和盲测阶段门
-- [x] 垂直切片图像美术资产包
+- [x] 32px 垂直切片图像资产 V2 与确定性构图标杆
 - [ ] Godot 灰盒构建
-- [ ] 场景组装、shader 与声音实装
+- [ ] 场景组装、运行时美术验收、shader 与声音实装
 - [ ] 五人不知情盲测
 
 切片只验证三个问题：玩家是否会主动调查；知道继续有代价后是否会犹豫；房子回应上一轮行为时，玩家是否感到它记得的是自己。
@@ -81,7 +81,7 @@ flowchart LR
   <img src="assets/branding/visual-language.svg" width="100%" alt="《地狱轮回》视觉语言与核心色板">
 </p>
 
-- **640×360** 内部分辨率，**16×16** 像素网格，整数缩放。
+- **640×360** 内部分辨率，**32×32** 像素瓦片与 **32×48** 主角，整数缩放。
 - 夜墨、冷墙、旧纸、病灯与焦红构成受约束的低饱和色板。
 - 第一轮先建立可信住宅；第二轮让同一件日常物品开始指控玩家。
 - 执行者没有精灵。恐怖来自光源消失、声音停止和可见距离缩短。
@@ -89,15 +89,21 @@ flowchart LR
 > 主视觉是概念目标，不是游戏实机截图。所有游戏内资产将按同一色板重新进行像素制作与实机验证。
 
 <details>
-<summary><strong>查看已完成的垂直切片图像资产包</strong></summary>
+<summary><strong>查看垂直切片图像资产 V2（REVIEW）</strong></summary>
 <br>
+
+<p align="center">
+  <img src="assets/game/previews/bedroom_benchmark.png" width="640" alt="由实际32像素图集合成的卧室视觉标杆；当前处于美术评审状态">
+</p>
+
+> 上图由实际运行时图集确定性合成，是比例与构图标杆，不是 Godot 实机截图；对应资产仍需运行时三状态验收。
 
 | 第一轮记忆 | 第二轮回应 |
 |---|---|
 | <img src="assets/game/closeups/child_drawing_loop1.png" width="320" alt="第一轮儿童画"> | <img src="assets/game/closeups/child_drawing_loop2.png" width="320" alt="第二轮儿童画"> |
 | <img src="assets/game/closeups/wedding_photo_loop1.png" width="320" alt="第一轮婚纱照"> | <img src="assets/game/closeups/wedding_photo_loop2.png" width="320" alt="第二轮婚纱照"> |
 
-环境瓦片、78 个稳定图集区域、角色帧、UI、FX 与全部可编辑源文件见 [`assets/game/`](assets/game/README.md)。
+环境瓦片、83 个稳定图集区域、角色帧、UI、FX、640×360构图标杆与全部可编辑源文件见 [`assets/game/`](assets/game/README.md)。运行时资产当前为 `REVIEW`，不会在缺少 Godot 截图时冒充发布级成品。
 </details>
 
 <details>
@@ -118,7 +124,7 @@ flowchart LR
 |---|---|---|
 | 产品 | [Game Vision](docs/GAME_VISION.md) · [Decisions](docs/DECISIONS.md) | 体验支柱、责任表达、结尾哲学 |
 | 内容 | [Vertical Slice](docs/VERTICAL_SLICE.md) · [Narrative Beats](docs/NARRATIVE_BEATS.md) | 双轮流程、全部关键文本、02:17 谜题 |
-| 视觉 | [Art Bible](docs/ART_BIBLE.md) · [Level Blockout](docs/LEVEL_BLOCKOUT.md) | 色板、像素规范、精确坐标与视线 |
+| 视觉 | [Art Bible](docs/ART_BIBLE.md) · [Art Review](docs/ART_REVIEW.md) · [Level Blockout](docs/LEVEL_BLOCKOUT.md) | 色板、质量门、精确坐标与视线 |
 | 交互 | [UI/UX](docs/UI_UX_SPEC.md) · [Audio Direction](docs/AUDIO_DIRECTION.md) | 屏幕状态、按住确认、逐拍声音 |
 | 工程 | [Technical Design](docs/TECHNICAL_DESIGN.md) · [Contracts](docs/IMPLEMENTATION_CONTRACTS.md) | 状态不变量、接口、信号和错误语义 |
 | 制作 | [Asset Manifest](docs/ASSET_MANIFEST.md) · [AI Build Protocol](docs/AI_BUILD_PROTOCOL.md) | 穷举资产、依赖图、任务完成定义 |

@@ -9,7 +9,7 @@
 1. [`DECISIONS.md`](DECISIONS.md) — 已接受的决定优先级最高；修改决定必须新增修订记录。
 2. [`VERTICAL_SLICE.md`](VERTICAL_SLICE.md) — 当前里程碑的范围、流程与完成定义。
 3. [`NARRATIVE_BEATS.md`](NARRATIVE_BEATS.md) — 叙事事实、逐拍文本和呈现边界。
-4. 专项制作规格 — [`ART_BIBLE.md`](ART_BIBLE.md)、[`LEVEL_BLOCKOUT.md`](LEVEL_BLOCKOUT.md)、[`UI_UX_SPEC.md`](UI_UX_SPEC.md)、[`AUDIO_DIRECTION.md`](AUDIO_DIRECTION.md)。专项内的具体规则优先于通用技术默认值。
+4. 专项制作规格 — [`ART_BIBLE.md`](ART_BIBLE.md)、[`ART_REVIEW.md`](ART_REVIEW.md)、[`LEVEL_BLOCKOUT.md`](LEVEL_BLOCKOUT.md)、[`UI_UX_SPEC.md`](UI_UX_SPEC.md)、[`AUDIO_DIRECTION.md`](AUDIO_DIRECTION.md)。专项内的具体规则优先于通用技术默认值。
 5. [`TECHNICAL_DESIGN.md`](TECHNICAL_DESIGN.md) 与 [`IMPLEMENTATION_CONTRACTS.md`](IMPLEMENTATION_CONTRACTS.md) — 系统结构、稳定 ID、数据和事件接口。
 6. [`ASSET_MANIFEST.md`](ASSET_MANIFEST.md) — 当前版本允许生产的完整资产范围。
 7. [`PLAYTEST.md`](PLAYTEST.md) — 如何判断实现正确、体验假设是否成立。
@@ -30,6 +30,7 @@ GitHub 仓库页的非代码设置与更新规则记录在 [`GITHUB_SHOWCASE.md`
 | `VERTICAL_SLICE` | 本轮具体做什么、何时算完成 | 完整版全部内容 |
 | `NARRATIVE_BEATS` | 玩家看到、听到和理解什么 | 节点结构和代码接口 |
 | `ART_BIBLE` | 色板、像素、构图和变化强度 | 改写叙事事实 |
+| `ART_REVIEW` | 当前美术质量、拒绝原因和批准证据 | 用静态脚本检查替代实机评审 |
 | `LEVEL_BLOCKOUT` | 坐标、门洞、碰撞和视线 | 最终美术细节 |
 | `UI_UX_SPEC` | 屏幕、输入反馈和舒适性 | 状态规则和剧情内容 |
 | `AUDIO_DIRECTION` | 声景、混音、逐拍声音 | 新增剧情事件 |

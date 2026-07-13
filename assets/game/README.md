@@ -1,10 +1,12 @@
 # 垂直切片图像资产包
 
-状态：**视觉资产已生产并通过静态检查**<br>
+状态：**V2 运行时视觉资产已生产并通过静态检查，等待 Godot 实机视觉验收**<br>
 适用版本：Vertical Slice 0.1<br>
 最后更新：2026-07-13
 
 本目录包含当前双轮垂直切片所需的全部图像美术资产。音频、Godot shader 代码和场景动画不属于本目录。
+
+静态检查只证明文件、图集与色板契约有效，不代表美术已获批准。所有运行时资产当前为 `REVIEW`；只有第一轮、第二轮和惩罚三组 Godot 截图及动画检查完成后才能进入 `APPROVED`。
 
 ## 预览
 
@@ -13,6 +15,12 @@
 ![标题背景](ui/title_background.png)
 
 ![游戏字标](ui/wordmark.png)
+
+### 运行时构图标杆
+
+![卧室原生 640×360 确定性合成预览](previews/bedroom_benchmark.png)
+
+该图由实际运行时图集确定性合成，用于检查比例、材质、出口可读性和注意力层级；它不是 Godot 实机截图，也不替代最终验收证据。
 
 ### 记忆碎片
 
@@ -41,10 +49,10 @@
 assets/game/
 ├── atlas_regions.json              # 图集区域与角色帧契约
 ├── atlases/
-│   ├── environment_tiles.png       # 16px 环境瓦片
+│   ├── environment_tiles.png       # 32px 环境瓦片
 │   └── props_atlas.png             # 家具、线索、变体、非关键道具
 ├── characters/
-│   └── qin_zheng_spritesheet.png   # 4方向×4帧，单帧16×24
+│   └── qin_zheng_spritesheet.png   # 4方向×4帧，单帧32×48
 ├── closeups/
 │   ├── kitchen_receipt.png
 │   ├── child_drawing_loop1.png
@@ -54,12 +62,14 @@ assets/game/
 │   └── memory_tape.png
 ├── fx/
 │   └── fx_patterns.png             # 暗角与焦红边缘纹理
+├── previews/
+│   └── bedroom_benchmark.png       # 640×360 确定性构图预览
 ├── ui/
 │   ├── title_background.png
 │   ├── wordmark.png
 │   └── ui_atlas.png
 └── source/
-    ├── *.svg                       # 确定性可编辑像素源
+    ├── *.svg                       # 确定性可编辑像素源与细节层
     ├── atlas_regions.json
     └── generated/                  # 生成图高分辨率母版与提示记录
 ```
@@ -81,8 +91,8 @@ assets/game/
 
 区域、尺寸、角色行列语义统一记录在 [`atlas_regions.json`](atlas_regions.json)。实现不得按肉眼重新猜区域，也不得使用数组位置代替稳定 `id`。
 
-- 环境瓦片基础单元为 16×16；
-- 角色单帧为 16×24；行依次为下、上、左、右；
+- 环境瓦片基础单元为 32×32；
+- 角色单帧为 32×48；行依次为下、上、左、右；
 - 道具采用显式矩形区域；
 - UI 图集中的文字只是视觉样例，最终中文正文仍由本地化字体渲染。
 
@@ -91,13 +101,15 @@ assets/game/
 - 首次使用执行 `pnpm install`；资产工具唯一依赖是锁定版本的 `sharp`。
 - `pnpm art:build-sources` 重建确定性 SVG 源；`pnpm art:export` 将其按原尺寸导出为 PNG。
 - `pnpm art:process-generated` 重建六张有限色运行时特写。
+- `pnpm art:preview` 使用导出图集重建 640×360 卧室构图预览。
 - `pnpm art:verify` 检查栅格尺寸、图集越界、重复 ID 和确定性源文件色板。
 - `pnpm art:build` 依次执行全部步骤并完成最终验证。
 - 确定性资产由根目录 [`tools/build_visual_assets.mjs`](../../tools/build_visual_assets.mjs) 生成；修改脚本后重新导出 SVG 和 PNG。
 - 复杂特写的高分辨率母版与最终提示保存在 [`source/generated/`](source/generated/)。
 - 根目录 [`tools/process_generated_assets.mjs`](../../tools/process_generated_assets.mjs) 使用最近邻缩放、32 色无抖动量化生成 320×180 运行时特写；禁止直接导入高分辨率母版。
-- 不直接覆盖 `closeups/` 中的批准版本；变更先生成带版本号的新文件，完成前后对照后再更新区域消费者。
+- 不直接覆盖 `closeups/` 中的评审基线；变更先生成带版本号的新文件，完成前后对照后再更新区域消费者。
 - 概念主视觉可以作光影参考，不能直接切割成家具或角色精灵。
+- 构图预览只用于 `REVIEW`；不得把它称作实机截图或据此提升为 `APPROVED`。
 
 ## 设计边界
 
