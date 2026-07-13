@@ -120,7 +120,11 @@ flowchart LR
 |---|---|
 | <img src="docs/evidence/runtime/v3_first_loop_kitchen.png" width="320" alt="V3 第一轮厨房：地面留有水渍，餐桌上只有一只杯子"> | <img src="docs/evidence/runtime/v3_loop2_kitchen.png" width="320" alt="V3 第二轮厨房：水渍消失，餐桌上出现两只杯子"> |
 
-> 两张图来自同一 Godot 场景的合法状态链，不是概念图拼接。房屋不靠随机换皮制造恐怖，而是让同一件日常物品在第二轮改变证词。
+| 第一轮：画纸藏在床下 | 第二轮：画纸主动朝外 |
+|---|---|
+| <img src="docs/evidence/runtime/v3_first_loop_child_room.png" width="320" alt="V3 第一轮儿童房：画纸从床下露出"> | <img src="docs/evidence/runtime/v3_loop2_child_room.png" width="320" alt="V3 第二轮儿童房：画纸出现在床边，红门朝向玩家"> |
+
+> 对照图来自同一 Godot 场景的合法状态链，不是概念图拼接。房屋不靠随机换皮制造恐怖，而是让同一件日常物品在第二轮改变证词。
 
 <details>
 <summary><strong>查看垂直切片图像资产 V2（REVIEW）</strong></summary>

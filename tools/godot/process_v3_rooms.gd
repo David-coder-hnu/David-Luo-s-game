@@ -28,6 +28,10 @@ const LOOP_2_ROOMS := {
 		"source": "res://assets/game/generated_v3/rooms/kitchen_loop2_background.png",
 		"flip_x": false,
 	},
+	"child_room": {
+		"source": "res://assets/game/generated_v3/rooms/child_room_loop2_background.png",
+		"flip_x": false,
+	},
 }
 const OUTPUT_DIRECTORY := "res://assets/game/generated_v3/runtime/rooms"
 

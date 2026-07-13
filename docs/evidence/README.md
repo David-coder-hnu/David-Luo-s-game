@@ -55,3 +55,20 @@ GODOT="$HOME/Applications/Godot-4.6.3-stable.app/Contents/MacOS/Godot"
   --capture-phase=loop_2 \
   --capture-screenshot=res://docs/evidence/runtime/v3_loop2_kitchen.png
 ```
+
+## V3 儿童房两轮对照
+
+- 第一轮：`runtime/v3_first_loop_child_room.png`
+- 第二轮：`runtime/v3_loop2_child_room.png`
+
+第二轮中，床下纸角消失，同一张儿童画移到床右侧并正面朝外；黄色房屋的门变为红色，最高人形进入屋内，门外无人。`child_drawing` 交互点从 `(35, 19)` 同步移动到 `(37, 19)`，避免画面与调查位置脱节。
+
+复现第二轮儿童房：
+
+```sh
+GODOT="$HOME/Applications/Godot-4.6.3-stable.app/Contents/MacOS/Godot"
+"$GODOT" --path . --resolution 1280x720 -- \
+  --capture-room=child_room \
+  --capture-phase=loop_2 \
+  --capture-screenshot=res://docs/evidence/runtime/v3_loop2_child_room.png
+```

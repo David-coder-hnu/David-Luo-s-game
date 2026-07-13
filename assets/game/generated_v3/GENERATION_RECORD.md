@@ -17,6 +17,7 @@ V3 将生成式位图作为玩家可见美术的主要来源。旧的确定性 S
 | `rooms/kitchen_loop2_background.png` | 第二轮厨房精确编辑版；地面水渍消失，餐桌单杯变为两只干净杯子 | `df9dc20916e4f088dac5d4faddbdacad7b415fec5c37dc662908383827457fc0` |
 | `rooms/child_room_master.png` | 第一轮儿童房母版；生活痕迹、床侧画纸、身高线和褪色暖色 | `e9440c08687624a7f3e22e786c6d2bcdef65b7c047475928085382ff9df76c3c` |
 | `rooms/child_room_loop1_background_v2.png` | 儿童房精确编辑版；左墙加入与中央走廊相连的双瓦片宽门洞，其余构图锁定 | `c3a12bc36fa85e4860ff38cfb4eaefec389a27bcb40f20084fa98a7ee0e77cc7` |
+| `rooms/child_room_loop2_background.png` | 第二轮儿童房精确编辑版；画纸由床下移至床边并正面朝外，红门与室内三人构图可读 | `961d393daf21cabea04063a31ab050d595ca63efe041cd54dd5608e3931a28a6` |
 | `rooms/hallway_master.png` | 第一轮中央走廊母版；五向门洞、出口区分、灯具节奏和克制生活痕迹 | `f8751d0008ec08f767ce7a09db5265ab6edc0b2af31ee065dc679a76f17c5049` |
 | `rooms/living_room_loop1_background.png` | 移除母版人物后的第一轮客厅纯背景 | `1b2e154e7e535131c03ca808de32262ae128a0daa6edde017c67249b32196fe6` |
 | `rooms/bedroom_loop1_background.png` | 移除母版人物后的第一轮卧室纯背景 | `ed5c16b8e87f97a6ea79f4c0a4f597351e6b74bd0050f4a1f71a7a81ea26966c` |
@@ -28,6 +29,7 @@ V3 将生成式位图作为玩家可见美术的主要来源。旧的确定性 S
 | `runtime/rooms/kitchen_loop1.png` | 第一轮厨房 640×360 最近邻运行时背景 | `6eb3b71c18da845bada17057708dbea5e0fe8cab2b103da1c2e98d224f50eab6` |
 | `runtime/rooms/kitchen_loop2.png` | 第二轮厨房 640×360 最近邻运行时背景 | `28299b1381b53283e9dfdb8ed1e247ea3a26ed7c55f08eabc77894f69a875802` |
 | `runtime/rooms/child_room_loop1.png` | 第一轮儿童房门洞校正版 640×360 最近邻运行时背景 | `3606c92e60684cf6709c744d8f2b6b71ded4fa5c583e9a0602aeb38045bc10a7` |
+| `runtime/rooms/child_room_loop2.png` | 第二轮儿童房 640×360 最近邻运行时背景 | `7eeb2d8acb15c33aa84425c4d790018de4a614feab906d440d9d324c7b72eda7` |
 | `runtime/rooms/living_room_loop1.png` | 第一轮客厅 640×360 最近邻运行时背景 | `813c11c33a36ca5271917a3aad0ec1f9d78652a5989e2d374a2b8a4be5beff69` |
 
 母版提示的核心约束：高完成度正交俯视像素美术；可信的三口之家客厅；入口、家庭桌、照片形成主视线，时钟位于独立视线；冷暗环境与克制暖灯；无怪物、血液、宗教符号、文字和水印。
@@ -35,6 +37,8 @@ V3 将生成式位图作为玩家可见美术的主要来源。旧的确定性 S
 儿童房门洞精确编辑提示：以 `child_room_master.png` 为编辑目标，只在左墙中段加入约两块 32px 运行时瓦片宽的开放门洞与木门框；锁定房间轮廓、床、床侧纸角、书桌、书架、窗、身高线、玩具、地毯、灯具、家具位置、光照和色板；右墙保持封闭；无角色、文字、符号、水印、怪物、血液或透视漂移。使用 OpenAI 内置图像生成工具的 `precise-object-edit` 工作流。
 
 厨房第二轮精确编辑提示：以 `kitchen_master.png` 为第一轮不变量参考，只执行两项变化——移除左中部浅色地面水渍并恢复匹配瓷砖，把下方餐桌的单杯替换为并排的两只干净同款杯子；锁定右侧门洞、冰箱、炉灶、橱柜、水槽、开启柜门、收据与碎片、桌椅、地毯、植物、光影、色板和负空间；无角色、血液、怪物、红光、文字或水印。使用 OpenAI 内置图像生成工具的 `precise-object-edit` 工作流。
+
+儿童房第二轮精确编辑提示：以左门洞校准后的 `child_room_loop1_background_v2.png` 为第一轮不变量参考，把床下露出三分之一的同一张旧纸儿童画移到床右侧地面并完全正面朝外；小画面保留黄色房屋，门改为唯一的小面积蜡笔焦红，三个人形均位于屋内且最高的深蓝灰人形站在红门后，门外无人；移除床下旧纸；锁定门洞、房间轮廓、床、桌柜、窗、身高线、玩具、地毯、灯具、家具位置、光影、色板和负空间；无可读文字、怪物、鬼影、血液、红色环境光或额外画纸。使用 OpenAI 内置图像生成工具的 `precise-object-edit` 工作流。
 
 ## 生产规则
 

@@ -14,10 +14,14 @@ func _run() -> void:
 	await process_frame
 
 	var kitchen := house.get_node("RoomBackgrounds/KitchenV3") as Sprite2D
+	var child_room := house.get_node("RoomBackgrounds/ChildRoomV3") as Sprite2D
 	var bedroom := house.get_node("RoomBackgrounds/BedroomV3") as Sprite2D
+	var child_drawing := house.get_node("child_drawing") as Area2D
 	var kitchen_loop_1 := kitchen.texture
+	var child_room_loop_1 := child_room.texture
 	var bedroom_loop_1 := bedroom.texture
-	if kitchen_loop_1 == null or bedroom_loop_1 == null:
+	var child_drawing_loop_1_position := child_drawing.position
+	if kitchen_loop_1 == null or child_room_loop_1 == null or bedroom_loop_1 == null:
 		_fail("V3 loop-one textures were not loaded")
 		return
 
@@ -34,6 +38,12 @@ func _run() -> void:
 	if kitchen.texture == kitchen_loop_1:
 		_fail("kitchen did not switch to its V3 loop-two texture")
 		return
+	if child_room.texture == child_room_loop_1:
+		_fail("child room did not switch to its V3 loop-two texture")
+		return
+	if child_drawing.position == child_drawing_loop_1_position or child_drawing.position != Vector2(1184, 608):
+		_fail("child drawing interaction did not follow the face-up loop-two paper")
+		return
 	if bedroom.texture != bedroom_loop_1:
 		_fail("room without a loop-two texture did not preserve its approved fallback")
 		return
@@ -46,8 +56,11 @@ func _run() -> void:
 
 	game_state.start_new_game()
 	await process_frame
-	if kitchen.texture != kitchen_loop_1:
-		_fail("starting a new game did not restore the V3 loop-one texture")
+	if kitchen.texture != kitchen_loop_1 or child_room.texture != child_room_loop_1:
+		_fail("starting a new game did not restore the V3 loop-one textures")
+		return
+	if child_drawing.position != child_drawing_loop_1_position:
+		_fail("starting a new game did not restore the hidden child drawing interaction")
 		return
 
 	print("V3_ROOM_STATE_SMOKE_OK")

@@ -9,7 +9,10 @@ const V3_ROOM_TEXTURES := {
 		0: preload("res://assets/game/generated_v3/runtime/rooms/kitchen_loop1.png"),
 		1: preload("res://assets/game/generated_v3/runtime/rooms/kitchen_loop2.png"),
 	},
-	&"child_room": {0: preload("res://assets/game/generated_v3/runtime/rooms/child_room_loop1.png")},
+	&"child_room": {
+		0: preload("res://assets/game/generated_v3/runtime/rooms/child_room_loop1.png"),
+		1: preload("res://assets/game/generated_v3/runtime/rooms/child_room_loop2.png"),
+	},
 	&"living_room": {0: preload("res://assets/game/generated_v3/runtime/rooms/living_room_loop1.png")},
 }
 const INTERACTABLE_SCRIPT := preload("res://scripts/world/interactable.gd")
@@ -31,6 +34,10 @@ const ROOM_CAMERA_CENTERS := {
 	&"kitchen": Vector2(320, 528),
 	&"child_room": Vector2(1280, 528),
 	&"living_room": Vector2(800, 928),
+}
+const CHILD_DRAWING_POSITIONS := {
+	0: Vector2(1120, 608),
+	1: Vector2(1184, 608),
 }
 
 @onready var tiles: TileMapLayer = $Tiles
@@ -140,6 +147,7 @@ func _refresh_v3_background_textures() -> void:
 
 func _on_phase_changed(_from: StringName, _to: StringName) -> void:
 	_refresh_v3_background_textures()
+	_apply_cycle_interaction_positions()
 
 
 func _build_room(rect: Rect2i, floor_type: StringName, openings: Array) -> void:
@@ -236,9 +244,10 @@ func _load_fragment_definitions() -> void:
 
 
 func _build_fragment_interactions() -> void:
+	var cycle_index: int = GameState.snapshot_for_debug()["cycle_index"]
 	var positions := {
 		&"kitchen_receipt": Vector2(240, 608),
-		&"child_drawing": Vector2(1120, 608),
+		&"child_drawing": CHILD_DRAWING_POSITIONS.get(cycle_index, CHILD_DRAWING_POSITIONS[0]),
 		&"wedding_photo": Vector2(1008, 880),
 	}
 	for fragment_id: StringName in positions:
@@ -247,6 +256,14 @@ func _build_fragment_interactions() -> void:
 			push_error("Missing fragment definition: %s" % fragment_id)
 			continue
 		_add_fragment_interaction(definition, positions[fragment_id])
+
+
+func _apply_cycle_interaction_positions() -> void:
+	var child_drawing := get_node_or_null("child_drawing") as Node2D
+	if child_drawing == null:
+		return
+	var cycle_index: int = GameState.snapshot_for_debug()["cycle_index"]
+	child_drawing.position = CHILD_DRAWING_POSITIONS.get(cycle_index, CHILD_DRAWING_POSITIONS[0])
 
 
 func _build_collisions() -> void:
