@@ -15,8 +15,8 @@ const ROOMS := {
 		"flip_x": false,
 	},
 	"child_room": {
-		"source": "res://assets/game/generated_v3/rooms/child_room_master.png",
-		"flip_x": true,
+		"source": "res://assets/game/generated_v3/rooms/child_room_loop1_background_v2.png",
+		"flip_x": false,
 	},
 	"living_room": {
 		"source": "res://assets/game/generated_v3/rooms/living_room_loop1_background.png",

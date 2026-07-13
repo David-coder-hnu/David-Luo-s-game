@@ -185,7 +185,7 @@ func _build_props() -> void:
 	_add_prop(props_back, "child_bed", Rect2(0, 64, 96, 64), Vector2(1120, 480), 0)
 	_add_prop(props_back, "height_marks", Rect2(192, 64, 32, 64), Vector2(1472, 448), 0)
 	_add_prop(props_back, "music_box", Rect2(224, 64, 32, 32), Vector2(1344, 480), 1)
-	_add_prop(props_back, "child_drawing", Rect2(256, 64, 32, 32), Vector2(1376, 608), 1)
+	_add_prop(props_back, "child_drawing", Rect2(256, 64, 32, 32), Vector2(1120, 608), 1)
 	_add_prop(props_back, "light_child", Rect2(448, 128, 32, 32), Vector2(1216, 448), 1)
 
 	# Living room: family layout first, clock left, photograph right.
@@ -218,7 +218,7 @@ func _load_fragment_definitions() -> void:
 func _build_fragment_interactions() -> void:
 	var positions := {
 		&"kitchen_receipt": Vector2(240, 608),
-		&"child_drawing": Vector2(1376, 608),
+		&"child_drawing": Vector2(1120, 608),
 		&"wedding_photo": Vector2(1008, 880),
 	}
 	for fragment_id: StringName in positions:
