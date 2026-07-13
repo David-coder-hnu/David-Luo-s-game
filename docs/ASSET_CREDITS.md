@@ -12,6 +12,10 @@
 | `assets/branding/github-social-preview.jpg` | GitHub 分享预览 | 由 `hell-cycle-hero.png` 等比缩放与 JPEG 编码 | 同主视觉 | 1280×640、低于 1 MB；用于仓库 Settings | 2026-07-13 |
 | `assets/branding/visual-language.svg` | 视觉语言与色板板 | 项目原创 | MIT | 代码原生 SVG | 2026-07-13 |
 | `assets/diagrams/house-blockout.svg` | 五房间灰盒图 | 项目原创 | MIT | 代码原生 SVG；坐标依据 `LEVEL_BLOCKOUT.md` | 2026-07-13 |
+| `assets/game/source/*.svg`、`assets/game/atlases/*.png`、`assets/game/characters/*.png`、`assets/game/ui/ui_atlas.png`、`assets/game/ui/wordmark.png`、`assets/game/fx/*.png` | 瓦片、道具、角色、UI、FX | 项目确定性生成脚本 | MIT | 由 `tools/build_visual_assets.mjs` 生成；只使用美术圣经色板 | 2026-07-13 |
+| `assets/game/ui/title_background.png` | 游戏标题背景 | 由项目主视觉受控裁切 | 同主视觉 | 640×360；概念视觉用于标题，不宣称实机场景 | 2026-07-13 |
+| `assets/game/source/generated/*_source.png` | 叙事特写高分辨率母版 | David Luo 项目指导；OpenAI 内置图像生成工具生成 | 由项目所有者按 MIT 分发；同时受生成服务适用条款约束 | 提示与 SHA-256 见同目录 `GENERATION_RECORD.md`；不得直接导入游戏 | 2026-07-13 |
+| `assets/game/closeups/*.png` | 叙事特写运行时图像 | 由上述母版经确定性处理生成 | 同母版 | 320×180、最近邻、有限色、无抖动；处理脚本可复现 | 2026-07-13 |
 
 ## 合入规则
 

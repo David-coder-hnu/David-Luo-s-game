@@ -68,8 +68,9 @@ flowchart LR
 - [x] 五房间精确灰盒、状态机和数据契约
 - [x] 美术、UI、音频与完整资产清单
 - [x] AI 任务图、功能验收和盲测阶段门
+- [x] 垂直切片图像美术资产包
 - [ ] Godot 灰盒构建
-- [ ] 视觉与声音实装
+- [ ] 场景组装、shader 与声音实装
 - [ ] 五人不知情盲测
 
 切片只验证三个问题：玩家是否会主动调查；知道继续有代价后是否会犹豫；房子回应上一轮行为时，玩家是否感到它记得的是自己。
@@ -86,6 +87,18 @@ flowchart LR
 - 执行者没有精灵。恐怖来自光源消失、声音停止和可见距离缩短。
 
 > 主视觉是概念目标，不是游戏实机截图。所有游戏内资产将按同一色板重新进行像素制作与实机验证。
+
+<details>
+<summary><strong>查看已完成的垂直切片图像资产包</strong></summary>
+<br>
+
+| 第一轮记忆 | 第二轮回应 |
+|---|---|
+| <img src="assets/game/closeups/child_drawing_loop1.png" width="320" alt="第一轮儿童画"> | <img src="assets/game/closeups/child_drawing_loop2.png" width="320" alt="第二轮儿童画"> |
+| <img src="assets/game/closeups/wedding_photo_loop1.png" width="320" alt="第一轮婚纱照"> | <img src="assets/game/closeups/wedding_photo_loop2.png" width="320" alt="第二轮婚纱照"> |
+
+环境瓦片、78 个稳定图集区域、角色帧、UI、FX 与全部可编辑源文件见 [`assets/game/`](assets/game/README.md)。
+</details>
 
 <details>
 <summary><strong>查看五房间灰盒</strong></summary>

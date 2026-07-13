@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="180" viewBox="0 0 640 180" shape-rendering="crispEdges">
+<defs><linearGradient id="ember" x1="0" x2="1"><stop stop-color="#C8BFAE"/><stop offset="0.7" stop-color="#C29A5B"/><stop offset="1" stop-color="#8D3035"/></linearGradient></defs><rect width="640" height="180" fill="#0B0C14"/><text x="320" y="88" fill="url(#ember)" font-family="PingFang SC, Heiti SC, sans-serif" font-size="58" font-weight="700" text-anchor="middle" letter-spacing="10">地狱轮回</text><text x="320" y="128" fill="#69656A" font-family="Georgia, serif" font-size="18" text-anchor="middle" letter-spacing="9">HELL CYCLE</text><path d="M176 146 H464" stroke="#242936"/><path d="M278 146 H362" stroke="#8D3035"/>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "name": "hell-cycle-art-pipeline",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Deterministic visual-asset pipeline for Hell Cycle",
+  "type": "module",
+  "scripts": {
+    "art:build-sources": "node tools/build_visual_assets.mjs",
+    "art:export": "node tools/export_visual_assets.mjs",
+    "art:process-generated": "node tools/process_generated_assets.mjs",
+    "art:verify": "node tools/verify_visual_assets.mjs",
+    "art:build": "pnpm art:build-sources && pnpm art:export && pnpm art:process-generated && pnpm art:verify"
+  },
+  "devDependencies": {
+    "sharp": "0.34.5"
+  }
+}
