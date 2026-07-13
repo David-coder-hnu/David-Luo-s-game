@@ -19,6 +19,8 @@
 
 GitHub 仓库页的非代码设置与更新规则记录在 [`GITHUB_SHOWCASE.md`](GITHUB_SHOWCASE.md)，它不改变游戏需求优先级。
 
+Mac 开发环境、Godot 路径和基础验证命令记录在 [`DEVELOPMENT.md`](DEVELOPMENT.md)；它执行技术基线，不改变产品需求优先级。
+
 如果较低优先级文档与较高优先级文档冲突，应先修正文档，不得自行选择实现。
 
 ## 文档职责
@@ -36,6 +38,7 @@ GitHub 仓库页的非代码设置与更新规则记录在 [`GITHUB_SHOWCASE.md`
 | `AUDIO_DIRECTION` | 声景、混音、逐拍声音 | 新增剧情事件 |
 | `TECHNICAL_DESIGN` | 系统怎样协作 | 改写剧情或扩大范围 |
 | `IMPLEMENTATION_CONTRACTS` | ID、字段、信号和错误语义 | 产品方向选择 |
+| `DEVELOPMENT` | Mac 开发环境、Godot 命令和导出验证 | 改变首发平台或游戏范围 |
 | `ASSET_MANIFEST` | 当前要生产哪些资产 | 未经决策扩大范围 |
 | `PLAYTEST` | 怎样验收和收集证据 | 用主观偏好替代测试观察 |
 | `AI_BUILD_PROTOCOL` | 怎样拆分、委派和评审任务 | 替代专项设计规格 |

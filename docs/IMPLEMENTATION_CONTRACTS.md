@@ -20,9 +20,17 @@
 
 `kitchen_receipt`、`child_drawing`、`wedding_photo`
 
-### 关键对象
+### 场景对象
 
-`bed`、`exit_door`、`living_clock`、`memory_compartment`、`memory_tape`
+关键交互：`bed`、`exit_door`、`living_clock`、`memory_compartment`、`memory_tape`
+
+主要碎片及变化目标：`kitchen_receipt`、`kitchen_stain`、`kitchen_glass`、`child_drawing`、`music_box`、`wedding_photo`
+
+灯具：`light_kitchen`、`light_child`、`light_living`、`light_hall_south`、`light_hall_north`、`light_bedroom`
+
+装饰目标：`bedroom_rug`、`bedroom_lamp`、`bedroom_window`
+
+同一对象的两轮形态共享一个 `object_id`，由变化记录替换纹理、可见性或属性；不得把 `*_loop1`、`*_loop2` 资产区域名当成场景对象 ID。
 
 ID 写入代码、数据、测试和调试工具后不可改名。玩家可见名称来自文本键，不使用 ID 直接展示。
 

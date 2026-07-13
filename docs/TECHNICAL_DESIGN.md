@@ -25,6 +25,17 @@
 - 目标渲染分辨率为 640×360，像素资产使用整数缩放；窗口允许 2×、3×、全屏显示。
 - 目标帧率 60 FPS。所有叙事时间线使用与帧率无关的计时。
 - 首发导出目标仅 Windows x86_64。
+- 当前开发主机为 Apple Silicon Mac；编辑器内运行和本地调试使用 macOS 版本 Godot，不构成 macOS 发布承诺。Mac 可以生成 Windows x86_64 构建，但最终发布验收必须在真实 Windows 环境完成。
+- 地图使用 Godot 4.6 的 `TileMapLayer` + `TileSet`，不使用已弃用的单体 `TileMap` 工作流。
+
+### 实施常量
+
+- 玩家正常移动速度：`96 px/s`；对角输入归一化，不产生速度增益。
+- 玩家碰撞脚印：`20×12 px`，锚定在 32×48 角色帧底部中央。
+- 交互最大距离：玩家脚点至目标锚点 `48 px`；正前方优先区为约 90°，范围内再按距离与稳定 ID 排序。
+- 普通移动使用立即响应，不增加惯性；惩罚阶段只通过统一倍率平滑降至 `0.6`。
+- 相机和所有世界精灵最终绘制位置取整到整数像素；禁止纹理过滤、Mipmaps、物理插值造成的半像素位置。
+- 640×360 为基础视口；窗口伸缩使用整数倍率和黑边，Windows 的 `fullscreen=true` 映射为独占全屏。
 
 ## 3. 建议目录
 
@@ -88,7 +99,7 @@ Main
 
 ### AudioDirector
 
-管理环境、界面、事件和心跳四类总线。峰值限制在统一混音规则内；“主音量”必须影响全部总线。
+管理 `Master`、`Ambience`、`Foley`、`Memory`、`Event`、`Heartbeat`、`UI` 七条总线。峰值限制在统一混音规则内；“主音量”必须影响全部总线。
 
 ## 5. 状态模型
 
@@ -96,12 +107,12 @@ Main
 
 ```text
 phase:
-  TITLE
-  LOOP_1
-  PUNISHMENT_1
-  LOOP_2
-  ENDING_FACE
-  ENDING_AVOID
+  title
+  loop_1
+  punishment_1
+  loop_2
+  ending_face
+  ending_avoid
 
 cycle_index: 0 | 1
 completed_fragments: { kitchen_receipt, child_drawing, wedding_photo }
@@ -115,8 +126,8 @@ ending_committed: bool
 
 ### 状态不变量
 
-- `PUNISHMENT_1` 只能在三个碎片均完成时进入，且每次进程最多进入一次。
-- `cycle_index == 1` 时必须处于 `LOOP_2` 或某个结尾阶段。
+- `punishment_1` 只能在三个碎片均完成时进入，且每次进程最多进入一次。
+- `cycle_index == 1` 时必须处于 `loop_2` 或某个结尾阶段。
 - `first_room_loop_1` 一旦写入不得覆盖。
 - `clock_solved` 只能在第二轮为真。
 - `final_memory_opened` 为真之前不能提交任何结尾。
@@ -128,17 +139,17 @@ ending_committed: bool
 ## 6. 状态迁移
 
 ```text
-TITLE
-  └─ new_game → LOOP_1
-       └─ all_fragments_completed → PUNISHMENT_1
-            └─ timeline_finished → LOOP_2
+title
+  └─ new_game → loop_1
+       └─ all_fragments_completed → punishment_1
+            └─ timeline_finished → loop_2
                  ├─ clock_solved → final_memory_opened
-                 │    ├─ hold_memory_confirmed → ENDING_FACE
-                 │    └─ hold_sleep_confirmed → ENDING_AVOID
-                 └─ remain_in_loop → LOOP_2
+                 │    ├─ hold_memory_confirmed → ending_face
+                 │    └─ hold_sleep_confirmed → ending_avoid
+                 └─ remain_in_loop → loop_2
 
-ENDING_FACE / ENDING_AVOID
-  └─ ending_finished → TITLE + reset_progress
+ending_face / ending_avoid
+  └─ ending_finished → title + reset_progress
 ```
 
 任何未列出的迁移都视为缺陷。开发工具可以调用受控跳转，但必须先建立该阶段所需的合法前置状态。
@@ -197,7 +208,7 @@ ENDING_FACE / ENDING_AVOID
 
 ## 10. 房间行为记录
 
-房间入口使用不重叠的触发区域。只在 `LOOP_1` 且 `first_room_loop_1` 为空时记录厨房、儿童房或客厅；走廊和卧室永不成为该值。
+房间入口使用不重叠的触发区域。只在 `loop_1` 且 `first_room_loop_1` 为空时记录厨房、儿童房或客厅；走廊和卧室永不成为该值。
 
 第二轮进入匹配房间时：
 
@@ -243,7 +254,7 @@ ENDING_FACE / ENDING_AVOID
 
 ## 14. 音频与画面安全
 
-- 音频总线：Master、Ambience、Event、UI、Heartbeat。
+- 音频总线：Master、Ambience、Foley、Memory、Event、Heartbeat、UI。
 - 导入前统一检查响度和峰值，禁止通过极端音量制造惊吓。
 - 空间音频只用于可定位的住宅声音；执行者的最终接近声故意使用非空间或贴近监听者的混音。
 - 全屏亮度变化不得超过 `VERTICAL_SLICE.md` 的闪烁上限。
